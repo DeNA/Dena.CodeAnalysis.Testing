@@ -1,8 +1,8 @@
 using Microsoft.Build.Locator;
 
-namespace TestRoslynRunner.Tests
+namespace TestRoslynRunner
 {
-    public class MsBuidLocatorInitializer
+    public class MSBuidLocatorInitializer
     {
         private static bool registered;
         private static object registeredLock = new object();
