@@ -1,8 +1,8 @@
 using Microsoft.Build.Locator;
 
-namespace TestRoslynRunner
+namespace Dena.CodeAnalysis.Testing
 {
-    public class MSBuidLocatorInitializer
+    public static class MSBuidLocatorInitializer
     {
         private static bool registered;
         private static object registeredLock = new object();
