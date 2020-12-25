@@ -45,7 +45,4 @@ Global
 		{B50FC929-F9BF-4DBC-B7EB-A29396801725}.Release|x86.ActiveCfg = Release|Any CPU
 		{B50FC929-F9BF-4DBC-B7EB-A29396801725}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{B50FC929-F9BF-4DBC-B7EB-A29396801725} = {B573B896-3DB8-4F60-9389-29BD081C0203}
-	EndGlobalSection
 EndGlobal
