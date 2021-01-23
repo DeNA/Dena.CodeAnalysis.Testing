@@ -1,21 +1,26 @@
 using Microsoft.Build.Locator;
 
+
+
 namespace Dena.CodeAnalysis.Testing
 {
+    // ReSharper disable once InconsistentNaming
     public static class MSBuidLocatorInitializer
     {
-        private static bool registered;
+        private static bool _registered;
         private static object registeredLock = new object();
+
 
         public static void Setup()
         {
             lock (registeredLock)
             {
-                if (registered)
+                if (_registered)
                 {
                     return;
                 }
-                registered = true;
+
+                _registered = true;
             }
 
             // MSBuildLocatorが何をしているのかはまだ詳しくわかっていない
