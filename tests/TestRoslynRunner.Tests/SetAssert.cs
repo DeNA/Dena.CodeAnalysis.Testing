@@ -2,31 +2,59 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+
+
 namespace Dena.CodeAnalysis.Testing
 {
+    /// <summary>
+    /// A collection of helper classes to test various conditions associated
+    /// with sets within unit tests. If the condition being tested is not
+    /// met, an exception is thrown.
+    /// </summary>
     public static class SetAssert
     {
-        public static void AreEqual<T>(ISet<T> a, ISet<T> b)
+        /// <summary>
+        /// Tests whether the specified sets are equal and throws an exception
+        /// if the two sets are not equal.
+        /// </summary>
+        /// <param name="expected">The first set to compare. This is the set the tests expectes.</param>
+        /// <param name="actual">The second value to compare. This is the value produced by the code under test.</param>
+        /// <typeparam name="T">The type of the element of the sets to compare.</typeparam>
+        /// <exception cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException">
+        /// Thrown if <paramref name="expected" /> is not equal to <paramref name="actual" />.
+        /// </exception>
+        public static void AreEqual<T>(ISet<T> expected, ISet<T> actual)
         {
-            // 含まれている要素が一致するなら何もしない
-            if (a.SetEquals(b)) { return; }
-            var leftExtra = new HashSet<T>(a); // このすぐ後で破壊的操作が入るのでコピーしておく
-            var rightExtra = new HashSet<T>(b);
-            var common = new HashSet<T>(a);
-            leftExtra.ExceptWith(b); // leftExtra に b に含まれていない要素だけが残る（数学でいう集合の引き算）
-            rightExtra.ExceptWith(a); // 右側のみに含まれている要素もとっておく
-            common.IntersectWith(b); // 左と右の両方に入っているやつ
-            var builder = new StringBuilder(); // 失敗時のメッセージを組み立てていくためのやつ
-            foreach (var l in leftExtra) {
+            if (expected.SetEquals(actual))
+            {
+                return;
+            }
+
+            var missing = new HashSet<T>(expected);
+            var extra = new HashSet<T>(actual);
+            var common = new HashSet<T>(expected);
+
+            missing.ExceptWith(actual);
+            extra.ExceptWith(expected);
+            common.IntersectWith(actual);
+
+            var builder = new StringBuilder();
+            foreach (var l in missing)
+            {
                 builder.Append($"\n- {l}");
-            } // 左にしか入っていない奴の頭に - をつける
-            foreach (var r in rightExtra) {
+            }
+
+            foreach (var r in extra)
+            {
                 builder.Append($"\n+ {r}");
-            } // 右にしか入っていない奴の頭に + をつける
-            foreach (var x in common) {
+            }
+
+            foreach (var x in common)
+            {
                 builder.Append($"\n  {x}");
-            } // 両方に入っている奴には何もつけない
-            Assert.Fail(builder.ToString()); // + と - とかでいい感じの見た目のメッセージで失敗させる
+            }
+
+            Assert.Fail(builder.ToString());
         }
     }
 }
