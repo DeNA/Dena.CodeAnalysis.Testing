@@ -10,43 +10,91 @@ using Microsoft.CodeAnalysis.MSBuild;
 
 
 
-namespace TestRoslynRunner
+namespace Dena.CodeAnalysis.Testing
 {
-    public class AnalyzerTest {
+    public static class DiagnosticAnalyzerRunner
+    {
         /// <summary>
-        /// 渡された <c cref="DiagnosticAnalyzer">DiagnosticAnalyzer</c> を使って指定したコードを静的検査する。
+        /// Run the specified <see cref="DiagnosticAnalyzer" />.
         /// </summary>
-        /// <param name="analyzer">実行したい <c cref="DiagnosticAnalyzer">DiagnosticAnalyzer</c></param>
-        /// <param name="codes">静的検査したいコード。1つ以上指定されてないと例外がでる</param>
-        /// <returns><param name="analyzer"/>が作成した<c cref="Diagnostic"/>の配列</returns>
-        /// <throws>与えた<param name="codes"/>が空だったら<c cref="Exception"/>が投げられる</throws>
-        public async Task<ImmutableArray<Diagnostic>> RunAnalyzer(DiagnosticAnalyzer analyzer, string[] codes)
+        /// <param name="analyzer">The <see cref="DiagnosticAnalyzer" /> to run.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken" /> that the task will observe.</param>
+        /// <param name="codes">The target code that the <paramref name="analyzer" /> analyze.</param>
+        /// <returns>ImmutableArray contains all reported <see cref="Diagnostic" />.</returns>
+        /// <throws>Throws <c cref="AtLeastOneCodeMustBeRequired" /> if <paramref name="codes" /> are empty.</throws>
+        public static async Task<ImmutableArray<Diagnostic>> Run(
+            DiagnosticAnalyzer analyzer,
+            CancellationToken cancellationToken,
+            params string[] codes
+        )
         {
+            if (!codes.Any())
+            {
+                throw new AtLeastOneCodeMustBeRequired();
+            }
+
             using (var workspace = MSBuildWorkspace.Create())
             {
                 MSBuidLocatorInitializer.Setup();
-                var projectId = ProjectId.CreateNewId(debugName: null);
+
+                var projectId = ProjectId.CreateNewId();
                 var solution = workspace
                     .CurrentSolution
                     .AddProject(projectId, "", "", LanguageNames.CSharp);
-                // Note: documentは、solution経由でprojectにセットする
+
                 foreach (var code in codes)
                 {
-                    var documentId = DocumentId.CreateNewId(projectId, debugName: null);
-                    solution = solution.AddDocument(documentId, "", code, filePath: "");
+                    var documentId = DocumentId.CreateNewId(projectId);
+                    solution = solution.AddDocument(documentId, DefaultFilePath, code, filePath: DefaultFilePath);
                 }
 
-                var noMetadataReferenceProject = solution.Projects.First();
-                // Note: noMetadataReferenceProjectに標準ライブラリが存在していないため
+                var noMetadataReferencedProject = solution.Projects.First();
+
+                // NOTE: Make standard libraries visible to the specified codes to analyze.
                 var metadataReferences =
-                    await ReferenceAssemblies.Default.ResolveAsync(LanguageNames.CSharp, CancellationToken.None);
-                var project = noMetadataReferenceProject.AddMetadataReferences(metadataReferences);
+                    await ReferenceAssemblies.Default.ResolveAsync(LanguageNames.CSharp, cancellationToken);
+
+                var project = noMetadataReferencedProject.AddMetadataReferences(metadataReferences);
                 var compilation = await project.GetCompilationAsync();
                 var withnalyzers = compilation!.WithAnalyzers(
-                    ImmutableArray.Create<DiagnosticAnalyzer>(analyzer)
+                    ImmutableArray.Create(analyzer)
                 );
-                return await withnalyzers.GetAllDiagnosticsAsync();
+                return await withnalyzers.GetAllDiagnosticsAsync(cancellationToken);
             }
+        }
+
+
+        /// <summary>
+        /// Gets the prefix to apply to source files added without an explicit name.
+        /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest.DefaultFilePathPrefix" />
+        /// </summary>
+        public static string DefaultFilePathPrefix { get; } = "/0/Test";
+
+        /// <summary>
+        /// Gets the name of the default project created for testing.
+        /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest.DefaultTestProjectName" />
+        /// </summary>
+        public static string DefaultTestProjectName { get; } = "TestProject";
+
+        /// <summary>
+        /// Gets the default full name of the first source file added for a test.
+        /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest.DefaultFilePath" />
+        /// </summary>
+        public static string DefaultFilePath => DefaultFilePathPrefix + 0 + "." + DefaultFileExt;
+
+        /// <summary>
+        /// Gets the default file extension to use for files added to the test without an explicit name.
+        /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest.DefaultFileExt" />
+        /// </summary>
+        public static string DefaultFileExt { get; }
+
+
+        /// <summary>
+        /// None of codes specified but at least one code must be required.
+        /// </summary>
+        public class AtLeastOneCodeMustBeRequired : Exception
+        {
+            public override string ToString() => "None of codes specified but at least one code must be required";
         }
     }
 }
