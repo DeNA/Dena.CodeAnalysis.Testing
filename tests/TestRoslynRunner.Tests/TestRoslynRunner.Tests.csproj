@@ -1,11 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netcoreapp5.0</TargetFramework>
 
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-    <RestoreAdditionalProjectSources>https://dotnet.myget.org/F/roslyn-analyzers/api/v3/index.json;$(RestoreAdditionalProjectSources)</RestoreAdditionalProjectSources>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
