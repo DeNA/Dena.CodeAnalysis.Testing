@@ -15,7 +15,7 @@
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Description>Test helpers for DiagnosticAnalyzers</Description>
     <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
-    <Copyright>Copyright ©DeNA Co., Ltd. All rights reserved.</Copyright>
+    <Copyright>Copyright DeNA Co., Ltd. All rights reserved.</Copyright>
     <PackageTags>analyzers</PackageTags>
     <NoPackageAnalysis>true</NoPackageAnalysis>
   </PropertyGroup>
