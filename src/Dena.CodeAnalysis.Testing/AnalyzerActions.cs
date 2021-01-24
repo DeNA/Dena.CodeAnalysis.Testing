@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -94,6 +95,7 @@ namespace Dena.CodeAnalysis.Testing
         /// <param name="a">The first actions will be executed before <paramref name="b" />.</param>
         /// <param name="b">The second actions will be executed after <paramref name="a" />.</param>
         /// <returns>Composed actions.</returns>
+        [SuppressMessage("ReSharper", "UnusedMember.Global")] // WHY: This is an exposed API.
         public static AnalyzerActions Compose(AnalyzerActions a, AnalyzerActions b)
         {
             var result = new AnalyzerActions();
@@ -113,6 +115,10 @@ namespace Dena.CodeAnalysis.Testing
         }
 
 
+        /// <summary>
+        /// Register all actions to the specified <see cref="AnalysisContext" />.
+        /// </summary>
+        /// <param name="context">The context that the actions register to.</param>
         public void RegisterAllTo(AnalysisContext context)
         {
             context.RegisterCodeBlockAction(CodeBlockAction);

@@ -49,7 +49,7 @@ namespace Dena.CodeAnalysis.Testing
                 throw new AtLeastOneCodeMustBeRequired();
             }
 
-            MSBuidLocatorInitializer.Setup();
+            MSBuildLocatorRegisterer.RegisterIfNecessary();
             using (var workspace = MSBuildWorkspace.Create())
             {
                 var projectId = ProjectId.CreateNewId();
@@ -81,27 +81,27 @@ namespace Dena.CodeAnalysis.Testing
 
         /// <summary>
         /// Gets the prefix to apply to source files added without an explicit name.
-        /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest.DefaultFilePathPrefix" />
+        /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest{IVerifier}.DefaultFilePathPrefix" />
         /// </summary>
         public static readonly string DefaultFilePathPrefix = "/0/Test";
 
         /// <summary>
         /// Gets the name of the default project created for testing.
-        /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest.DefaultTestProjectName" />
+        /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest{IVerifier}.DefaultTestProjectName" />
         /// </summary>
         public static readonly string DefaultTestProjectName = "TestProject";
 
         /// <summary>
         /// Gets the default full name of the first source file added for a test.
-        /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest.DefaultFilePath" />
+        /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest{IVerifier}.DefaultFilePath" />
         /// </summary>
         public static string DefaultFilePath => $"{DefaultFilePathPrefix}{0}.{DefaultFileExt}";
 
         /// <summary>
         /// Gets the default file extension to use for files added to the test without an explicit name.
-        /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest.DefaultFileExt" />
+        /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest{IVerifier}.DefaultFileExt" />
         /// </summary>
-        public static readonly string DefaultFileExt;
+        public static readonly string DefaultFileExt = default;
 
         /// <summary>
         /// Gets the default assembly name.
