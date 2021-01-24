@@ -9,37 +9,50 @@ namespace Dena.CodeAnalysis.Testing
     public class AnalyzerRunnerTests
     {
         [TestMethod]
-        public async Task TestNoCodeException()
+        public async Task WhenGivenNoCodes_ItShouldThrowAnException()
         {
-            var spy = new SpyAnalyzer();
+            var anyAnalyzer = new NullAnalyzer();
 
             await Assert.ThrowsExceptionAsync<DiagnosticAnalyzerRunner.AtLeastOneCodeMustBeRequired>(
-                async () => { await DiagnosticAnalyzerRunner.Run(spy); }
+                async () => { await DiagnosticAnalyzerRunner.Run(anyAnalyzer); }
             );
         }
 
 
         [TestMethod]
-        public async Task TestSuccessfullyCompilable()
+        public async Task WhenGivenDiagnosticCleanCode_ItShouldReturnNoDiagnostics()
         {
-            var spy = new SpyAnalyzer();
+            var anyAnalyzer = new NullAnalyzer();
+            var diagnostics = await DiagnosticAnalyzerRunner.Run(
+                anyAnalyzer,
+                ExampleCode.DiagnosticsFree
+            );
 
-            var diagnostics = await DiagnosticAnalyzerRunner.Run(spy, ExampleCode.SuccessfullyCompilable);
-
-            Assert.IsTrue(spy.IsInitialized);
             Assert.AreEqual(0, diagnostics.Length);
         }
 
 
         [TestMethod]
-        public async Task TestContainingSyntaxError()
+        public async Task WhenGivenContainingASyntaxError_ItShouldReturnSeveralDiagnostics()
         {
-            var spy = new SpyAnalyzer();
+            var anyAnalyzer = new NullAnalyzer();
+            var diagnostics = await DiagnosticAnalyzerRunner.Run(
+                anyAnalyzer,
+                ExampleCode.ContainingSyntaxError
+            );
 
-            var diagnostics = await DiagnosticAnalyzerRunner.Run(spy, ExampleCode.ContainingSyntaxError);
-
-            Assert.IsTrue(spy.IsInitialized);
             Assert.AreNotEqual(0, diagnostics.Length);
+        }
+
+
+        [TestMethod]
+        public async Task WhenGivenAnyCodes_ItShouldCallAnalyzerInitialize()
+        {
+            var spyAnalyzer = new SpyAnalyzer();
+
+            await DiagnosticAnalyzerRunner.Run(spyAnalyzer, ExampleCode.DiagnosticsFree);
+
+            Assert.IsTrue(spyAnalyzer.IsInitialized);
         }
     }
 }
