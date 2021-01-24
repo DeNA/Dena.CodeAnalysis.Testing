@@ -12,6 +12,16 @@ using Microsoft.CodeAnalysis.MSBuild;
 
 namespace Dena.CodeAnalysis.Testing
 {
+    /// <summary>
+    /// A runner for <see cref="DiagnosticAnalyzer" />.
+    /// The purpose of the runner is providing another helpers instead of <see cref="AnalyzerVerifier{T1, T2, T3}.VerifyAnalyzerAsync" />.
+    /// The AnalyzerVerifier has several problems:
+    ///
+    ///   1. Using AnalyzerVerifier, it is hard to instantiate analyzer with custom arguments (it will be needed
+    ///      if your analyzer is composed by several small analyzer-like components.)
+    ///   2. AnalyzerVerifier do diagnostics assertion, but it should be optional because analyzer-like small components
+    ///      may not need it.
+    /// </summary>
     public static class DiagnosticAnalyzerRunner
     {
         /// <summary>
@@ -50,32 +60,30 @@ namespace Dena.CodeAnalysis.Testing
             }
 
             MSBuildLocatorRegisterer.RegisterIfNecessary();
-            using (var workspace = MSBuildWorkspace.Create())
+            using var workspace = MSBuildWorkspace.Create();
+            var projectId = ProjectId.CreateNewId();
+            var solution = workspace
+                .CurrentSolution
+                .AddProject(projectId, DefaultTestProjectName, DefaultAssemblyName, LanguageNames.CSharp);
+
+            foreach (var code in codes)
             {
-                var projectId = ProjectId.CreateNewId();
-                var solution = workspace
-                    .CurrentSolution
-                    .AddProject(projectId, DefaultTestProjectName, DefaultAssemblyName, LanguageNames.CSharp);
-
-                foreach (var code in codes)
-                {
-                    var documentId = DocumentId.CreateNewId(projectId);
-                    solution = solution.AddDocument(documentId, DefaultFilePath, code, filePath: DefaultFilePath);
-                }
-
-                var noMetadataReferencedProject = solution.Projects.First();
-
-                // NOTE: Make standard libraries visible to the specified codes to analyze.
-                var metadataReferences =
-                    await ReferenceAssemblies.Default.ResolveAsync(LanguageNames.CSharp, CancellationToken.None);
-
-                var project = noMetadataReferencedProject.AddMetadataReferences(metadataReferences);
-                var compilation = await project.GetCompilationAsync();
-                var withnalyzers = compilation!.WithAnalyzers(
-                    ImmutableArray.Create(analyzer)
-                );
-                return await withnalyzers.GetAllDiagnosticsAsync(cancellationToken);
+                var documentId = DocumentId.CreateNewId(projectId);
+                solution = solution.AddDocument(documentId, DefaultFilePath, code, filePath: DefaultFilePath);
             }
+
+            var noMetadataReferencedProject = solution.Projects.First();
+
+            // NOTE: Make standard libraries visible to the specified codes to analyze.
+            var metadataReferences =
+                await ReferenceAssemblies.Default.ResolveAsync(LanguageNames.CSharp, CancellationToken.None);
+
+            var project = noMetadataReferencedProject.AddMetadataReferences(metadataReferences);
+            var compilation = await project.GetCompilationAsync(cancellationToken);
+            var withAnalyzers = compilation!.WithAnalyzers(
+                ImmutableArray.Create(analyzer)
+            );
+            return await withAnalyzers.GetAllDiagnosticsAsync(cancellationToken);
         }
 
 
@@ -83,13 +91,13 @@ namespace Dena.CodeAnalysis.Testing
         /// Gets the prefix to apply to source files added without an explicit name.
         /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest{IVerifier}.DefaultFilePathPrefix" />
         /// </summary>
-        public static readonly string DefaultFilePathPrefix = "/0/Test";
+        public const string DefaultFilePathPrefix = "/0/Test";
 
         /// <summary>
         /// Gets the name of the default project created for testing.
         /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest{IVerifier}.DefaultTestProjectName" />
         /// </summary>
-        public static readonly string DefaultTestProjectName = "TestProject";
+        public const string DefaultTestProjectName = "TestProject";
 
         /// <summary>
         /// Gets the default full name of the first source file added for a test.
@@ -101,7 +109,7 @@ namespace Dena.CodeAnalysis.Testing
         /// Gets the default file extension to use for files added to the test without an explicit name.
         /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest{IVerifier}.DefaultFileExt" />
         /// </summary>
-        public static readonly string DefaultFileExt = default;
+        public const string DefaultFileExt = default;
 
         /// <summary>
         /// Gets the default assembly name.

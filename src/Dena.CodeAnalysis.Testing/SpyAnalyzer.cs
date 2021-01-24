@@ -20,7 +20,7 @@ namespace Dena.CodeAnalysis.Testing
         /// </summary>
         public bool IsInitialized;
 
-        private AnalyzerActions _actions;
+        private readonly AnalyzerActions _actions;
 
 
         /// <summary>
@@ -130,23 +130,22 @@ namespace Dena.CodeAnalysis.Testing
         /// Create an <see cref="AnalyzerActions" /> to record all events.
         /// </summary>
         /// <returns><see cref="AnalyzerActions" /> to record all events.</returns>
-        public static AnalyzerActions CreateSpyActions(SpyAnalyzer spy)
-        {
-            var actions = new AnalyzerActions();
-            actions.CodeBlockAction = context => spy.CodeBlockActionHistory.Add(context.CodeBlock);
-            actions.CodeBlockStartAction = context => spy.CodeBlockStartActionHistory.Add(context.CodeBlock);
-            actions.CompilationAction = context => spy.CompilationActionHistory.Add(context.Compilation);
-            actions.CompilationStartAction = context => spy.CompilationStartActionHistory.Add(context.Compilation);
-            actions.OperationAction = context => spy.OperationActionHistory.Add(context.Operation);
-            actions.OperationBlockAction = context => spy.OperationBlockActionHistory.Add(context.OperationBlocks);
-            actions.OperationBlockStartAction =
-                context => spy.OperationBlockStartActionHistory.Add(context.OperationBlocks);
-            actions.SemanticModelAction = context => spy.SemanticModelActionHistory.Add(context.SemanticModel);
-            actions.SymbolAction = context => spy.SymbolActionHistory.Add(context.Symbol);
-            actions.SymbolStartAction = context => spy.SymbolStartActionHistory.Add(context.Symbol);
-            actions.SyntaxNodeAction = context => spy.SyntaxNodeActionHistory.Add(context.Node);
-            actions.SyntaxTreeAction = context => spy.SyntaxTreeActionHistory.Add(context.Tree);
-            return actions;
-        }
+        public static AnalyzerActions CreateSpyActions(SpyAnalyzer spy) =>
+            new AnalyzerActions
+            {
+                CodeBlockAction = context => spy.CodeBlockActionHistory.Add(context.CodeBlock),
+                CodeBlockStartAction = context => spy.CodeBlockStartActionHistory.Add(context.CodeBlock),
+                CompilationAction = context => spy.CompilationActionHistory.Add(context.Compilation),
+                CompilationStartAction = context => spy.CompilationStartActionHistory.Add(context.Compilation),
+                OperationAction = context => spy.OperationActionHistory.Add(context.Operation),
+                OperationBlockAction = context => spy.OperationBlockActionHistory.Add(context.OperationBlocks),
+                OperationBlockStartAction =
+                    context => spy.OperationBlockStartActionHistory.Add(context.OperationBlocks),
+                SemanticModelAction = context => spy.SemanticModelActionHistory.Add(context.SemanticModel),
+                SymbolAction = context => spy.SymbolActionHistory.Add(context.Symbol),
+                SymbolStartAction = context => spy.SymbolStartActionHistory.Add(context.Symbol),
+                SyntaxNodeAction = context => spy.SyntaxNodeActionHistory.Add(context.Node),
+                SyntaxTreeAction = context => spy.SyntaxTreeActionHistory.Add(context.Tree)
+            };
     }
 }
