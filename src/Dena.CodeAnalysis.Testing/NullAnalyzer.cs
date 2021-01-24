@@ -11,6 +11,7 @@ namespace Dena.CodeAnalysis.Testing
     /// A null object class for <see cref="DiagnosticAnalyzer" />.
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
+    [SuppressMessage("ReSharper", "UnusedType.Global")] // WHY: This is an exposed API.
     public sealed class NullAnalyzer : DiagnosticAnalyzer
     {
         /// <summary>

@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -10,6 +11,7 @@ namespace Dena.CodeAnalysis.Testing
     /// A stub class for <see cref="DiagnosticAnalyzer" />.
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
+    [SuppressMessage("ReSharper", "UnusedType.Global")] // WHY: This is an exposed API.
     public sealed class StubAnalyzer : DiagnosticAnalyzer
     {
         private AnalyzerActions _actions;
