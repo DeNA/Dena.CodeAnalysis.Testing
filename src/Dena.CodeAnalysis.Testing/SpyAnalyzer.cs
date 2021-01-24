@@ -42,10 +42,10 @@ namespace Dena.CodeAnalysis.Testing
 
 
         /// <summary>
-        /// Returns only <see cref="StubDiagnosticDescriptor.Test"/>.
+        /// Returns only <see cref="StubDiagnosticDescriptor.ForTest"/>.
         /// </summary>
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics =>
-            ImmutableArray.Create(StubDiagnosticDescriptor.Test);
+            ImmutableArray.Create(StubDiagnosticDescriptor.ForTest);
 
         /// <summary>
         /// History of calls of the action registered via <see cref="AnalysisContext.RegisterCodeBlockAction" />

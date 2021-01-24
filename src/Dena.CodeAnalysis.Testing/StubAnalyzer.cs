@@ -52,6 +52,6 @@ namespace Dena.CodeAnalysis.Testing
         /// Return only <see cref="StubDiagnosticDescriptor" />.
         /// </summary>
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics =>
-            ImmutableArray.Create(StubDiagnosticDescriptor.Test);
+            ImmutableArray.Create(StubDiagnosticDescriptor.ForTest);
     }
 }

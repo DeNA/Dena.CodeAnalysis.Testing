@@ -19,7 +19,7 @@ namespace Dena.CodeAnalysis.Testing
             "ReSharper",
             "RS2008"
         )]
-        public static readonly DiagnosticDescriptor Test = new DiagnosticDescriptor(
+        public static readonly DiagnosticDescriptor ForTest = new DiagnosticDescriptor(
             "TEST",
             "This is a diagnostics stub",
             "This is a diagnostics stub",
