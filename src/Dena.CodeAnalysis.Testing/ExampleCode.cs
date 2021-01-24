@@ -10,7 +10,7 @@ namespace Dena.CodeAnalysis.Testing
     public static class ExampleCode
     {
         /// <summary>
-        /// An example code that can be compiled successfully.
+        /// An example code that can be compiled successfully with no Diagnostics.
         /// </summary>
         public const string DiagnosticsFree = @"
 public static class Program
