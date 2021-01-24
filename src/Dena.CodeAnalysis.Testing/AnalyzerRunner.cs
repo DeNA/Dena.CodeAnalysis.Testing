@@ -123,7 +123,7 @@ namespace Dena.CodeAnalysis.Testing
         /// </summary>
         public class AtLeastOneCodeMustBeRequired : Exception
         {
-            public override string ToString() => "None of codes specified but at least one code must be required";
+            public override string ToString() => "None of codes specified but at least one code must be specified";
         }
     }
 }
