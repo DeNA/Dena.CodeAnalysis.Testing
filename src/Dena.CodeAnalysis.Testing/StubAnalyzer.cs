@@ -11,7 +11,7 @@ namespace Dena.CodeAnalysis.Testing
     /// A stub class for <see cref="DiagnosticAnalyzer" />.
     /// </summary>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    [SuppressMessage("ReSharper", "UnusedType.Global")] // WHY: This is an exposed API.
+    [SuppressMessage("ReSharper", "UnusedType.Global", Justification = "This is an exposed API")]
     public sealed class StubAnalyzer : DiagnosticAnalyzer
     {
         private readonly AnalyzerActions _actions;
@@ -20,7 +20,7 @@ namespace Dena.CodeAnalysis.Testing
         /// <summary>
         /// Instantiate a stub for <see cref="DiagnosticAnalyzer" /> with no actions.
         /// </summary>
-        [SuppressMessage("ReSharper", "UnusedMember.Global")] // WHY: This is an exposed API.
+        [SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "This is an exposed API")]
         public StubAnalyzer()
         {
             _actions = new AnalyzerActions();

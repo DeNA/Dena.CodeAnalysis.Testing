@@ -95,7 +95,7 @@ namespace Dena.CodeAnalysis.Testing
         /// <param name="a">The first actions will be executed before <paramref name="b" />.</param>
         /// <param name="b">The second actions will be executed after <paramref name="a" />.</param>
         /// <returns>Composed actions.</returns>
-        [SuppressMessage("ReSharper", "UnusedMember.Global")] // WHY: This is an exposed API.
+        [SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "This is an exposed API")]
         public static AnalyzerActions Compose(AnalyzerActions a, AnalyzerActions b) =>
             new AnalyzerActions
             {

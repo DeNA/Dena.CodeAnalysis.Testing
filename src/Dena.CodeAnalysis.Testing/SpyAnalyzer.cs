@@ -32,7 +32,7 @@ namespace Dena.CodeAnalysis.Testing
         /// <summary>
         /// Record that the method has been called to <see cref="IsInitialized" />.
         /// </summary>
-        [SuppressMessage("ReSharper", "RS1026")] // WHY: Avoid exclusive access control for call histories.
+        [SuppressMessage("ReSharper", "RS1026", Justification = "Avoid exclusive access control for call histories")]
         public override void Initialize(AnalysisContext context)
         {
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.Analyze);
@@ -50,79 +50,77 @@ namespace Dena.CodeAnalysis.Testing
         /// <summary>
         /// History of calls of the action registered via <see cref="AnalysisContext.RegisterCodeBlockAction" />
         /// </summary>
-        [SuppressMessage("ReSharper", "CollectionNeverQueried.Global")] // WHY: This is an exposed API.
+        [SuppressMessage("ReSharper", "CollectionNeverQueried.Global", Justification = "This is an exposed API")]
         public readonly IList<SyntaxNode> CodeBlockActionHistory = new List<SyntaxNode>();
 
         /// <summary>
         /// History of calls of the action registered via <see cref="AnalysisContext.RegisterCodeBlockStartAction{SyntaxKind}" />
         /// </summary>
-        [SuppressMessage("ReSharper", "CollectionNeverQueried.Global")] // WHY: This is an exposed API.
+        [SuppressMessage("ReSharper", "CollectionNeverQueried.Global", Justification = "This is an exposed API")]
         public readonly IList<SyntaxNode> CodeBlockStartActionHistory = new List<SyntaxNode>();
 
         /// <summary>
         /// History of calls of the action registered via <see cref="AnalysisContext.RegisterCompilationAction" />
         /// </summary>
-        [SuppressMessage("ReSharper", "RS1008")] // WHY: Especially for testing, this should be allowed.
-        // WHY: This is an exposed API.
-        [SuppressMessage("ReSharper", "CollectionNeverQueried.Global")]
+        [SuppressMessage("ReSharper", "RS1008", Justification = "Especially for testing, this should be able to store to do check the property")]
+        [SuppressMessage("ReSharper", "CollectionNeverQueried.Global", Justification = "This is an exposed API")]
         public readonly IList<Compilation> CompilationActionHistory = new List<Compilation>();
 
         /// <summary>
         /// History of calls of the action registered via <see cref="AnalysisContext.RegisterCompilationStartAction" />
         /// </summary>
-        [SuppressMessage("ReSharper", "RS1008")] // WHY: Especially for testing, this should be allowed.
-        // WHY: This is an exposed API.
-        [SuppressMessage("ReSharper", "CollectionNeverQueried.Global")]
+        [SuppressMessage("ReSharper", "RS1008", Justification = "Especially for testing, this should be able to store to do check the property")]
+        [SuppressMessage("ReSharper", "CollectionNeverQueried.Global", Justification = "This is an exposed API")]
         public readonly IList<Compilation> CompilationStartActionHistory = new List<Compilation>();
 
         /// <summary>
         /// History of calls of the action registered via <see cref="AnalysisContext.RegisterOperationAction(Action{OperationAnalysisContext}, OperationKind[])" />
         /// </summary>
-        [SuppressMessage("ReSharper", "CollectionNeverQueried.Global")] // WHY: This is an exposed API.
+        [SuppressMessage("ReSharper", "CollectionNeverQueried.Global", Justification = "This is an exposed API")]
         public readonly IList<IOperation> OperationActionHistory = new List<IOperation>();
 
         /// <summary>
         /// History of calls of the action registered via <see cref="AnalysisContext.RegisterOperationBlockAction" />
         /// </summary>
-        [SuppressMessage("ReSharper", "CollectionNeverQueried.Global")] // WHY: This is an exposed API.
+        [SuppressMessage("ReSharper", "CollectionNeverQueried.Global", Justification = "This is an exposed API")]
         public readonly IList<ImmutableArray<IOperation>> OperationBlockActionHistory =
             new List<ImmutableArray<IOperation>>();
 
         /// <summary>
         /// History of calls of the action registered via <see cref="AnalysisContext.RegisterOperationBlockStartAction"/>
         /// </summary>
-        [SuppressMessage("ReSharper", "CollectionNeverQueried.Global")] // WHY: This is an exposed API.
+        [SuppressMessage("ReSharper", "CollectionNeverQueried.Global", Justification = "This is an exposed API")]
         public readonly IList<ImmutableArray<IOperation>> OperationBlockStartActionHistory =
             new List<ImmutableArray<IOperation>>();
 
         /// <summary>
         /// History of calls of the action registered via <see cref="AnalysisContext.RegisterSemanticModelAction"/>
         /// </summary>
-        [SuppressMessage("ReSharper", "CollectionNeverQueried.Global")] // WHY: This is an exposed API.
+        [SuppressMessage("ReSharper", "CollectionNeverQueried.Global", Justification = "This is an exposed API")]
         public readonly IList<SemanticModel> SemanticModelActionHistory = new List<SemanticModel>();
 
         /// <summary>
         /// History of calls of the action registered via <see cref="AnalysisContext.RegisterSymbolAction(Action{SymbolAnalysisContext}, SymbolKind[])" />
         /// </summary>
-        [SuppressMessage("ReSharper", "CollectionNeverQueried.Global")] // WHY: This is an exposed API.
+        [SuppressMessage("ReSharper", "CollectionNeverQueried.Global", Justification = "This is an exposed API")]
         public readonly IList<ISymbol> SymbolActionHistory = new List<ISymbol>();
 
         /// <summary>
         /// History of calls of the action registered via <see cref="AnalysisContext.RegisterSymbolStartAction(Action{SymbolStartAnalysisContext}, SymbolKind)" />
         /// </summary>
-        [SuppressMessage("ReSharper", "CollectionNeverQueried.Global")] // WHY: This is an exposed API.
+        [SuppressMessage("ReSharper", "CollectionNeverQueried.Global", Justification = "This is an exposed API")]
         public readonly IList<ISymbol> SymbolStartActionHistory = new List<ISymbol>();
 
         /// <summary>
         /// History of calls of the action registered via <see cref="AnalysisContext.RegisterSyntaxNodeAction{SyntaxKind}(Action{SyntaxNodeAnalysisContext}, SyntaxKind[])" />
         /// </summary>
-        [SuppressMessage("ReSharper", "CollectionNeverQueried.Global")] // WHY: This is an exposed API.
+        [SuppressMessage("ReSharper", "CollectionNeverQueried.Global", Justification = "This is an exposed API")]
         public readonly IList<SyntaxNode> SyntaxNodeActionHistory = new List<SyntaxNode>();
 
         /// <summary>
         /// History of calls of the action registered via <see cref="AnalysisContext.RegisterSyntaxTreeAction"/>
         /// </summary>
-        [SuppressMessage("ReSharper", "CollectionNeverQueried.Global")] // WHY: This is an exposed API.
+        [SuppressMessage("ReSharper", "CollectionNeverQueried.Global", Justification = "This is an exposed API")]
         public readonly IList<SyntaxTree> SyntaxTreeActionHistory = new List<SyntaxTree>();
 
 
