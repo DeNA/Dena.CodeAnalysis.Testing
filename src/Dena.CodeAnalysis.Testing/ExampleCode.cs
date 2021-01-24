@@ -12,7 +12,7 @@ namespace Dena.CodeAnalysis.Testing
         /// <summary>
         /// An example code that can be compiled successfully.
         /// </summary>
-        public static string SuccessfullyCompilable = @"
+        public const string SuccessfullyCompilable = @"
 public static class Program
 {
     public static void Main()
@@ -25,6 +25,6 @@ public static class Program
         /// <summary>
         /// An example code that contains a syntax error.
         /// </summary>
-        public static string ContainingSyntaxError = SuccessfullyCompilable + "ERROR";
+        public const string ContainingSyntaxError = SuccessfullyCompilable + "ERROR";
     }
 }

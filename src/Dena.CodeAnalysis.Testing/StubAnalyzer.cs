@@ -14,7 +14,7 @@ namespace Dena.CodeAnalysis.Testing
     [SuppressMessage("ReSharper", "UnusedType.Global")] // WHY: This is an exposed API.
     public sealed class StubAnalyzer : DiagnosticAnalyzer
     {
-        private AnalyzerActions _actions;
+        private readonly AnalyzerActions _actions;
 
 
         /// <summary>

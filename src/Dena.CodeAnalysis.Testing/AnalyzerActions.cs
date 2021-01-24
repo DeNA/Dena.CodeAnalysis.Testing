@@ -96,23 +96,22 @@ namespace Dena.CodeAnalysis.Testing
         /// <param name="b">The second actions will be executed after <paramref name="a" />.</param>
         /// <returns>Composed actions.</returns>
         [SuppressMessage("ReSharper", "UnusedMember.Global")] // WHY: This is an exposed API.
-        public static AnalyzerActions Compose(AnalyzerActions a, AnalyzerActions b)
-        {
-            var result = new AnalyzerActions();
-            result.CodeBlockAction = ComposeAction(a.CodeBlockAction, b.CodeBlockAction);
-            result.CodeBlockStartAction = ComposeAction(a.CodeBlockStartAction, b.CodeBlockStartAction);
-            result.CompilationAction = ComposeAction(a.CompilationAction, b.CompilationAction);
-            result.CompilationStartAction = ComposeAction(a.CompilationStartAction, b.CompilationStartAction);
-            result.OperationAction = ComposeAction(a.OperationAction, b.OperationAction);
-            result.OperationBlockAction = ComposeAction(a.OperationBlockAction, b.OperationBlockAction);
-            result.OperationBlockStartAction = ComposeAction(a.OperationBlockStartAction, b.OperationBlockStartAction);
-            result.SemanticModelAction = ComposeAction(a.SemanticModelAction, b.SemanticModelAction);
-            result.SymbolAction = ComposeAction(a.SymbolAction, b.SymbolAction);
-            result.SymbolStartAction = ComposeAction(a.SymbolStartAction, b.SymbolStartAction);
-            result.SyntaxNodeAction = ComposeAction(a.SyntaxNodeAction, b.SyntaxNodeAction);
-            result.SyntaxTreeAction = ComposeAction(a.SyntaxTreeAction, b.SyntaxTreeAction);
-            return result;
-        }
+        public static AnalyzerActions Compose(AnalyzerActions a, AnalyzerActions b) =>
+            new AnalyzerActions
+            {
+                CodeBlockAction = ComposeAction(a.CodeBlockAction, b.CodeBlockAction),
+                CodeBlockStartAction = ComposeAction(a.CodeBlockStartAction, b.CodeBlockStartAction),
+                CompilationAction = ComposeAction(a.CompilationAction, b.CompilationAction),
+                CompilationStartAction = ComposeAction(a.CompilationStartAction, b.CompilationStartAction),
+                OperationAction = ComposeAction(a.OperationAction, b.OperationAction),
+                OperationBlockAction = ComposeAction(a.OperationBlockAction, b.OperationBlockAction),
+                OperationBlockStartAction = ComposeAction(a.OperationBlockStartAction, b.OperationBlockStartAction),
+                SemanticModelAction = ComposeAction(a.SemanticModelAction, b.SemanticModelAction),
+                SymbolAction = ComposeAction(a.SymbolAction, b.SymbolAction),
+                SymbolStartAction = ComposeAction(a.SymbolStartAction, b.SymbolStartAction),
+                SyntaxNodeAction = ComposeAction(a.SyntaxNodeAction, b.SyntaxNodeAction),
+                SyntaxTreeAction = ComposeAction(a.SyntaxTreeAction, b.SyntaxTreeAction)
+            };
 
 
         /// <summary>
