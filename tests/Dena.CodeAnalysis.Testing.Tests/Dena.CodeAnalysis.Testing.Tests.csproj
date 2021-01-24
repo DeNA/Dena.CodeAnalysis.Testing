@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\TestRoslynRunner\TestRoslynRunner.csproj" />
+		<ProjectReference Include="..\..\src\Dena.CodeAnalysis.Testing\Dena.CodeAnalysis.Testing.csproj" />
   </ItemGroup>
 
 </Project>
