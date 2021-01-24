@@ -2,11 +2,22 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-		<!-- FIXME: It should be netstandard2.* but it will cause restoring error on Microsoft.Build.Locator. -->
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <!-- FIXME: It should be netstandard2.* but it will cause restoring error on Microsoft.Build.Locator. -->
+    <TargetFramework>netcoreapp5.0</TargetFramework>
     <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <RestoreAdditionalProjectSources>https://dotnet.myget.org/F/roslyn-analyzers/api/v3/index.json;$(RestoreAdditionalProjectSources)</RestoreAdditionalProjectSources>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Dena.CodeAnalysis.Testing</PackageId>
+    <PackageVersion>0.0.0.0</PackageVersion>
+    <Authors>Kazuma Inagaki, Koji Hasegawa, Kuniwak</Authors>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Description>Test helpers for DiagnosticAnalyzers</Description>
+    <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
+    <Copyright>Copyright ©DeNA Co., Ltd. All rights reserved.</Copyright>
+    <PackageTags>analyzers</PackageTags>
+    <NoPackageAnalysis>true</NoPackageAnalysis>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,8 +29,6 @@
     <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="3.7.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.7.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing.MSTest" Version="1.0.1-beta1.*" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.CodeFix.Testing.MSTest" Version="1.0.1-beta1.*" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.CodeRefactoring.Testing.MSTest" Version="1.0.1-beta1.*" />
   </ItemGroup>
 
 </Project>
