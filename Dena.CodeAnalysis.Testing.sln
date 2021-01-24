@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestRoslynRunner", "src\TestRoslynRunner\TestRoslynRunner.csproj", "{5C4F5607-880B-4D33-9182-2806F7D25E12}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dena.CodeAnalysis.Testing", "src\Dena.CodeAnalysis.Testing\Dena.CodeAnalysis.Testing.csproj", "{5C4F5607-880B-4D33-9182-2806F7D25E12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestRoslynRunner.Tests", "tests\TestRoslynRunner.Tests\TestRoslynRunner.Tests.csproj", "{B50FC929-F9BF-4DBC-B7EB-A29396801725}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dena.CodeAnalysis.Testing.Tests", "tests\Dena.CodeAnalysis.Testing.Tests\Dena.CodeAnalysis.Testing.Tests.csproj", "{B50FC929-F9BF-4DBC-B7EB-A29396801725}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
