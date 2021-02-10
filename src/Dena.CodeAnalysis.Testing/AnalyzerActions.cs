@@ -16,62 +16,62 @@ namespace Dena.CodeAnalysis.Testing
         /// <summary>
         /// The action for <see cref="AnalysisContext.RegisterCodeBlockAction" />
         /// </summary>
-        public Action<CodeBlockAnalysisContext> CodeBlockAction = context => { };
+        public Action<CodeBlockAnalysisContext> CodeBlockAction = _ => { };
 
         /// <summary>
         /// The action for <see cref="AnalysisContext.RegisterCodeBlockStartAction{SyntaxKind}" />
         /// </summary>
-        public Action<CodeBlockStartAnalysisContext<SyntaxKind>> CodeBlockStartAction = context => { };
+        public Action<CodeBlockStartAnalysisContext<SyntaxKind>> CodeBlockStartAction = _ => { };
 
         /// <summary>
         /// The action for <see cref="AnalysisContext.RegisterCompilationAction" />
         /// </summary>
-        public Action<CompilationAnalysisContext> CompilationAction = context => { };
+        public Action<CompilationAnalysisContext> CompilationAction = _ => { };
 
         /// <summary>
         /// The action for <see cref="AnalysisContext.RegisterCompilationStartAction" />
         /// </summary>
-        public Action<CompilationStartAnalysisContext> CompilationStartAction = context => { };
+        public Action<CompilationStartAnalysisContext> CompilationStartAction = _ => { };
 
         /// <summary>
         /// The action for <see cref="AnalysisContext.RegisterOperationAction(Action{OperationAnalysisContext}, OperationKind[])" />
         /// </summary>
-        public Action<OperationAnalysisContext> OperationAction = context => { };
+        public Action<OperationAnalysisContext> OperationAction = _ => { };
 
         /// <summary>
         /// The action for <see cref="AnalysisContext.RegisterOperationBlockAction" />
         /// </summary>
-        public Action<OperationBlockAnalysisContext> OperationBlockAction = context => { };
+        public Action<OperationBlockAnalysisContext> OperationBlockAction = _ => { };
 
         /// <summary>
         /// The action for <see cref="AnalysisContext.RegisterOperationBlockStartAction"/>
         /// </summary>
-        public Action<OperationBlockStartAnalysisContext> OperationBlockStartAction = context => { };
+        public Action<OperationBlockStartAnalysisContext> OperationBlockStartAction = _ => { };
 
         /// <summary>
         /// The action for <see cref="AnalysisContext.RegisterSemanticModelAction"/>
         /// </summary>
-        public Action<SemanticModelAnalysisContext> SemanticModelAction = context => { };
+        public Action<SemanticModelAnalysisContext> SemanticModelAction = _ => { };
 
         /// <summary>
         /// The action for <see cref="AnalysisContext.RegisterSymbolAction(Action{SymbolAnalysisContext}, SymbolKind[])" />
         /// </summary>
-        public Action<SymbolAnalysisContext> SymbolAction = context => { };
+        public Action<SymbolAnalysisContext> SymbolAction = _ => { };
 
         /// <summary>
         /// The action for <see cref="AnalysisContext.RegisterSymbolStartAction(Action{SymbolStartAnalysisContext}, SymbolKind)" />
         /// </summary>
-        public Action<SymbolStartAnalysisContext> SymbolStartAction = context => { };
+        public Action<SymbolStartAnalysisContext> SymbolStartAction = _ => { };
 
         /// <summary>
         /// The action for <see cref="AnalysisContext.RegisterSyntaxNodeAction{SyntaxKind}(Action{SyntaxNodeAnalysisContext}, SyntaxKind[])" />
         /// </summary>
-        public Action<SyntaxNodeAnalysisContext> SyntaxNodeAction = context => { };
+        public Action<SyntaxNodeAnalysisContext> SyntaxNodeAction = _ => { };
 
         /// <summary>
         /// The action for <see cref="AnalysisContext.RegisterSyntaxTreeAction"/>
         /// </summary>
-        public Action<SyntaxTreeAnalysisContext> SyntaxTreeAction = context => { };
+        public Action<SyntaxTreeAnalysisContext> SyntaxTreeAction = _ => { };
 
 
         /// <summary>
@@ -81,6 +81,7 @@ namespace Dena.CodeAnalysis.Testing
         /// <param name="b">The second action will be executed after <paramref name="a" />.</param>
         /// <typeparam name="T">The type of the argument of <paramref name="a" /> and <paramref name="b" />.</typeparam>
         /// <returns>Composed actions.</returns>
+        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "This is an exposed API")]
         public static Action<T> ComposeAction<T>(Action<T> a, Action<T> b) =>
             x =>
             {
@@ -97,7 +98,7 @@ namespace Dena.CodeAnalysis.Testing
         /// <returns>Composed actions.</returns>
         [SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "This is an exposed API")]
         public static AnalyzerActions Compose(AnalyzerActions a, AnalyzerActions b) =>
-            new AnalyzerActions
+            new()
             {
                 CodeBlockAction = ComposeAction(a.CodeBlockAction, b.CodeBlockAction),
                 CodeBlockStartAction = ComposeAction(a.CodeBlockStartAction, b.CodeBlockStartAction),
