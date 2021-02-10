@@ -44,7 +44,7 @@ namespace Dena.CodeAnalysis.Testing
             var endDiff = DiffEndLinePos(builder, expectedEnd, actualSpan.EndLinePosition);
             builder.AppendLine("  }");
 
-            Assert.IsFalse(pathDiff && startDiff && endDiff, builder.ToString());
+            Assert.IsFalse(pathDiff || startDiff || endDiff, builder.ToString());
         }
 
 
