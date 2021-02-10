@@ -24,10 +24,7 @@ namespace Dena.CodeAnalysis.Testing
         {
             lock (RegisteredLock)
             {
-                if (_registered)
-                {
-                    return;
-                }
+                if (_registered) return;
 
                 _registered = true;
             }
