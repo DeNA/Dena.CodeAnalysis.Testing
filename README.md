@@ -74,7 +74,7 @@ Assert.AreEqual(0, diagnostics.Length);
 var location = diagnostic.Location;
 
 LocationAssert.HaveTheSpan(
-    "/0/Test0.",             # Optional. Skip path assertion if the path not specified,  
+    "/0/Test0.",             // Optional. Skip path assertion if the path not specified,  
     new LinePosition(1, 0),
     new LinePosition(8, 5),
     location
