@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.Testing;
@@ -48,6 +49,7 @@ namespace Dena.CodeAnalysis.Testing
         /// <param name="codes">The target code that the <paramref name="analyzer" /> analyze.</param>
         /// <returns>ImmutableArray contains all reported <see cref="Diagnostic" />.</returns>
         /// <throws>Throws <c cref="AtLeastOneCodeMustBeRequired" /> if <paramref name="codes" /> are empty.</throws>
+        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "This is an exposed API")]
         public static async Task<ImmutableArray<Diagnostic>> Run(
             DiagnosticAnalyzer analyzer,
             CancellationToken cancellationToken,
@@ -91,30 +93,30 @@ namespace Dena.CodeAnalysis.Testing
         /// Gets the prefix to apply to source files added without an explicit name.
         /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest{IVerifier}.DefaultFilePathPrefix" />
         /// </summary>
-        public const string DefaultFilePathPrefix = "/0/Test";
+        private const string DefaultFilePathPrefix = "/0/Test";
 
         /// <summary>
         /// Gets the name of the default project created for testing.
         /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest{IVerifier}.DefaultTestProjectName" />
         /// </summary>
-        public const string DefaultTestProjectName = "TestProject";
+        private const string DefaultTestProjectName = "TestProject";
 
         /// <summary>
         /// Gets the default full name of the first source file added for a test.
         /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest{IVerifier}.DefaultFilePath" />
         /// </summary>
-        public static string DefaultFilePath => $"{DefaultFilePathPrefix}{0}.{DefaultFileExt}";
+        private static string DefaultFilePath => $"{DefaultFilePathPrefix}{0}.{DefaultFileExt}";
 
         /// <summary>
         /// Gets the default file extension to use for files added to the test without an explicit name.
         /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest{IVerifier}.DefaultFileExt" />
         /// </summary>
-        public const string DefaultFileExt = default;
+        private const string DefaultFileExt = default;
 
         /// <summary>
         /// Gets the default assembly name.
         /// </summary>
-        public static string DefaultAssemblyName => $"{DefaultTestProjectName}.dll";
+        private static string DefaultAssemblyName => $"{DefaultTestProjectName}.dll";
 
 
 

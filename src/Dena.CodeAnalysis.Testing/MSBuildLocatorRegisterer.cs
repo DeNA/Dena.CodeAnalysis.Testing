@@ -12,7 +12,7 @@ namespace Dena.CodeAnalysis.Testing
     public static class MSBuildLocatorRegisterer
     {
         private static bool _registered;
-        private static readonly object RegisteredLock = new object();
+        private static readonly object RegisteredLock = new();
 
 
         /// <summary>

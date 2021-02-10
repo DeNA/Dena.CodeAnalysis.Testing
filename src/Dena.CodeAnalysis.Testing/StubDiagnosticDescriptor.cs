@@ -19,7 +19,7 @@ namespace Dena.CodeAnalysis.Testing
             "RS2008",
             Justification = "This is for only test doubles for analyzers. So release tracking is not needed"
         )]
-        public static readonly DiagnosticDescriptor ForTest = new DiagnosticDescriptor(
+        public static readonly DiagnosticDescriptor ForTest = new (
             "TEST",
             "This is a diagnostics stub",
             "This is a diagnostics stub",
