@@ -35,10 +35,8 @@ namespace Dena.CodeAnalysis.Testing
         public static async Task<ImmutableArray<Diagnostic>> Run(
             DiagnosticAnalyzer analyzer,
             params string[] codes
-        )
-        {
-            return await Run(analyzer, CancellationToken.None, codes);
-        }
+        ) =>
+            await Run(analyzer, CancellationToken.None, codes);
 
 
         /// <summary>
@@ -56,10 +54,7 @@ namespace Dena.CodeAnalysis.Testing
             params string[] codes
         )
         {
-            if (!codes.Any())
-            {
-                throw new AtLeastOneCodeMustBeRequired();
-            }
+            if (!codes.Any()) throw new AtLeastOneCodeMustBeRequired();
 
             MSBuildLocatorRegisterer.RegisterIfNecessary();
             using var workspace = MSBuildWorkspace.Create();

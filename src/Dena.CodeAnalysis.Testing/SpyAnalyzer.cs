@@ -62,14 +62,22 @@ namespace Dena.CodeAnalysis.Testing
         /// <summary>
         /// History of calls of the action registered via <see cref="AnalysisContext.RegisterCompilationAction" />
         /// </summary>
-        [SuppressMessage("ReSharper", "RS1008", Justification = "Especially for testing, this should be able to store to do check the property")]
+        [SuppressMessage(
+            "ReSharper",
+            "RS1008",
+            Justification = "Especially for testing, this should be able to store to do check the property"
+        )]
         [SuppressMessage("ReSharper", "CollectionNeverQueried.Global", Justification = "This is an exposed API")]
         public readonly IList<Compilation> CompilationActionHistory = new List<Compilation>();
 
         /// <summary>
         /// History of calls of the action registered via <see cref="AnalysisContext.RegisterCompilationStartAction" />
         /// </summary>
-        [SuppressMessage("ReSharper", "RS1008", Justification = "Especially for testing, this should be able to store to do check the property")]
+        [SuppressMessage(
+            "ReSharper",
+            "RS1008",
+            Justification = "Especially for testing, this should be able to store to do check the property"
+        )]
         [SuppressMessage("ReSharper", "CollectionNeverQueried.Global", Justification = "This is an exposed API")]
         public readonly IList<Compilation> CompilationStartActionHistory = new List<Compilation>();
 
@@ -130,7 +138,7 @@ namespace Dena.CodeAnalysis.Testing
         /// <returns><see cref="AnalyzerActions" /> to record all events.</returns>
         [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "This is an exposed API")]
         public static AnalyzerActions CreateSpyActions(SpyAnalyzer spy) =>
-            new ()
+            new()
             {
                 CodeBlockAction = context => spy.CodeBlockActionHistory.Add(context.CodeBlock),
                 CodeBlockStartAction = context => spy.CodeBlockStartActionHistory.Add(context.CodeBlock),

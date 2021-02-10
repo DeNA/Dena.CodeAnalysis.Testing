@@ -21,10 +21,7 @@ namespace Dena.CodeAnalysis.Testing
         /// Instantiate a stub for <see cref="DiagnosticAnalyzer" /> with no actions.
         /// </summary>
         [SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "This is an exposed API")]
-        public StubAnalyzer()
-        {
-            _actions = new AnalyzerActions();
-        }
+        public StubAnalyzer() => _actions = new AnalyzerActions();
 
 
         /// <summary>

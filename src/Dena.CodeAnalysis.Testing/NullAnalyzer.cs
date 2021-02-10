@@ -18,7 +18,8 @@ namespace Dena.CodeAnalysis.Testing
         /// Do nothing.
         /// </summary>
         /// <param name="context">The analysis context but it will be not used.</param>
-        [SuppressMessage("ReSharper", "RS1025"), SuppressMessage("ReSharper", "RS1026")]
+        [SuppressMessage("ReSharper", "RS1025")]
+        [SuppressMessage("ReSharper", "RS1026")]
         public override void Initialize(AnalysisContext context)
         {
             // Do nothing.

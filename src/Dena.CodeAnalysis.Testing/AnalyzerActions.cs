@@ -136,9 +136,7 @@ namespace Dena.CodeAnalysis.Testing
             context.RegisterSymbolAction(SymbolAction, (SymbolKind[]) Enum.GetValues(typeof(SymbolKind)));
 
             foreach (SymbolKind symbolKind in Enum.GetValues(typeof(SymbolKind)))
-            {
                 context.RegisterSymbolStartAction(SymbolStartAction, symbolKind);
-            }
 
             context.RegisterSyntaxNodeAction(SyntaxNodeAction, (SyntaxKind[]) Enum.GetValues(typeof(SyntaxKind)));
             context.RegisterSyntaxTreeAction(SyntaxTreeAction);
