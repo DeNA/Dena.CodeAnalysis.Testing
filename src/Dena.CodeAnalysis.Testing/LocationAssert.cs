@@ -9,6 +9,24 @@ namespace Dena.CodeAnalysis.Testing
 {
     public static class LocationAssert
     {
+        /// <summary>
+        /// Tests whether the following 3 properties of <see cref="Location.GetLineSpan" /> and throws an exception
+        /// if the properties are not match.
+        ///
+        /// The 3 properties are:
+        /// <list type="bullet">
+        /// <item><see cref="FileLinePositionSpan.Path" /></item>
+        /// <item><see cref="FileLinePositionSpan.StartLinePosition" /></item>
+        /// <item><see cref="FileLinePositionSpan.EndLinePosition" /></item>
+        /// </list>
+        /// </summary>
+        /// <param name="expectedPath">The file path that expected.</param>
+        /// <param name="expectedStart">The start line position that expected.</param>
+        /// <param name="expectedEnd">The end line position that expected.</param>
+        /// <param name="actual">The actual location.</param>
+        /// <exception cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException">
+        /// Thrown if <paramref name="actual" /> have wrong properties.
+        /// </exception>
         public static void HaveTheSpan(
             string expectedPath,
             LinePosition expectedStart,
@@ -30,6 +48,22 @@ namespace Dena.CodeAnalysis.Testing
         }
 
 
+        /// <summary>
+        /// Tests whether the 2 properties of <see cref="Location.GetLineSpan" /> and throws an exception
+        /// if the properties are not match.
+        ///
+        /// The 2 major properties are:
+        /// <list type="bullet">
+        /// <item><see cref="FileLinePositionSpan.StartLinePosition" /></item>
+        /// <item><see cref="FileLinePositionSpan.EndLinePosition" /></item>
+        /// </list>
+        /// </summary>
+        /// <param name="expectedStart">The start line position that expected.</param>
+        /// <param name="expectedEnd">The end line position that expected.</param>
+        /// <param name="actual">The actual location.</param>
+        /// <exception cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException">
+        /// Thrown if <paramref name="actual" /> have wrong properties.
+        /// </exception>
         public static void HaveTheSpan(
             LinePosition expectedStart,
             LinePosition expectedEnd,

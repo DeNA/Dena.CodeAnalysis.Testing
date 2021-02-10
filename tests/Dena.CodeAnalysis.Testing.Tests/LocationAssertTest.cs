@@ -10,7 +10,7 @@ namespace Dena.CodeAnalysis.Testing
     public class LocationAssertTest
     {
         [TestMethod]
-        public async Task HaveTheSpanWithPath_Sucecss()
+        public async Task HaveTheSpanWithPath_Success()
         {
             var actual = await LocationFactory.Create();
 
@@ -28,17 +28,30 @@ namespace Dena.CodeAnalysis.Testing
         {
             var actual = await LocationFactory.Create();
 
-            Assert.ThrowsException<AssertFailedException>(
-                () =>
-                {
-                    LocationAssert.HaveTheSpan(
-                        "/0/Test999.",
-                        new LinePosition(999, 999),
-                        new LinePosition(999, 999),
-                        actual
-                    );
-                }
-            );
+            try
+            {
+                LocationAssert.HaveTheSpan(
+                    "/0/Test999.",
+                    new LinePosition(999, 999),
+                    new LinePosition(999, 999),
+                    actual
+                );
+            }
+            catch (AssertFailedException e)
+            {
+                Assert.AreEqual(
+                    @"Assert.IsFalse failed.   {
+-     Path = ""/0/Test999.""
++     Path = ""/0/Test0.""
+-     StartLinePosition = new LinePosition(999, 999)
++     StartLinePosition = new LinePosition(8, 0)
+-     EndLinePosition = new LinePosition(999, 999)
++     EndLinePosition = new LinePosition(8, 5)
+  }
+",
+                    e.Message
+                );
+            }
         }
 
 
@@ -60,16 +73,27 @@ namespace Dena.CodeAnalysis.Testing
         {
             var actual = await LocationFactory.Create();
 
-            Assert.ThrowsException<AssertFailedException>(
-                () =>
-                {
-                    LocationAssert.HaveTheSpan(
-                        new LinePosition(999, 999),
-                        new LinePosition(999, 999),
-                        actual
-                    );
-                }
-            );
+            try
+            {
+                LocationAssert.HaveTheSpan(
+                    new LinePosition(999, 999),
+                    new LinePosition(999, 999),
+                    actual
+                );
+            }
+            catch (AssertFailedException e)
+            {
+                Assert.AreEqual(
+                    @"Assert.IsFalse failed.   {
+-     StartLinePosition = new LinePosition(999, 999)
++     StartLinePosition = new LinePosition(8, 0)
+-     EndLinePosition = new LinePosition(999, 999)
++     EndLinePosition = new LinePosition(8, 5)
+  }
+",
+                    e.Message
+                );
+            }
         }
     }
 }
