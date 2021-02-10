@@ -61,7 +61,7 @@ namespace Dena.CodeAnalysis.Testing
             var actual = await LocationFactory.Create();
 
             LocationAssert.HaveTheSpan(
-                new LinePosition(1, 0),
+                new LinePosition(8, 0),
                 new LinePosition(8, 5),
                 actual
             );
