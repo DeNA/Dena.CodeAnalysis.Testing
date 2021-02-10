@@ -69,6 +69,20 @@ Assert.AreEqual(0, diagnostics.Length);
 
 
 
+### Assert Locations
+```c#
+var location = diagnostic.Location;
+
+LocationAssert.HaveTheSpan(
+    "/0/Test0.",             # Optional. Skip path assertion if the path not specified,  
+    new LinePosition(1, 0),
+    new LinePosition(8, 5),
+    location
+);
+```
+
+
+
 ### Check whether the DiagnosticAnalyzer.Initialize have been called
 
 ```c#
