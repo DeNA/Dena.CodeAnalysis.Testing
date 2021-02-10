@@ -16,7 +16,7 @@ namespace Dena.CodeAnalysis.Testing
 
             LocationAssert.HaveTheSpan(
                 "/0/Test0.",
-                new LinePosition(1, 0),
+                new LinePosition(8, 0),
                 new LinePosition(8, 5),
                 actual
             );
