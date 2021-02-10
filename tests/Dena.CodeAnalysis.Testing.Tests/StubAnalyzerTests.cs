@@ -15,7 +15,7 @@ namespace Dena.CodeAnalysis.Testing
             var stubAnalyzer = new StubAnalyzer(
                 new AnalyzerActions
                 {
-                    CodeBlockAction = context => callCount++
+                    CodeBlockAction = _ => callCount++
                 }
             );
 
@@ -32,7 +32,7 @@ namespace Dena.CodeAnalysis.Testing
             var stubAnalyzer = new StubAnalyzer(
                 new AnalyzerActions
                 {
-                    CodeBlockStartAction = context => callCount++
+                    CodeBlockStartAction = _ => callCount++
                 }
             );
 
@@ -49,7 +49,7 @@ namespace Dena.CodeAnalysis.Testing
             var stubAnalyzer = new StubAnalyzer(
                 new AnalyzerActions
                 {
-                    CompilationAction = context => callCount++
+                    CompilationAction = _ => callCount++
                 }
             );
 
@@ -66,7 +66,7 @@ namespace Dena.CodeAnalysis.Testing
             var stubAnalyzer = new StubAnalyzer(
                 new AnalyzerActions
                 {
-                    CompilationStartAction = context => callCount++
+                    CompilationStartAction = _ => callCount++
                 }
             );
 
@@ -83,7 +83,7 @@ namespace Dena.CodeAnalysis.Testing
             var stubAnalyzer = new StubAnalyzer(
                 new AnalyzerActions
                 {
-                    OperationAction = context => callCount++
+                    OperationAction = _ => callCount++
                 }
             );
 
@@ -100,7 +100,7 @@ namespace Dena.CodeAnalysis.Testing
             var stubAnalyzer = new StubAnalyzer(
                 new AnalyzerActions
                 {
-                    OperationBlockAction = context => callCount++
+                    OperationBlockAction = _ => callCount++
                 }
             );
 
@@ -117,7 +117,7 @@ namespace Dena.CodeAnalysis.Testing
             var stubAnalyzer = new StubAnalyzer(
                 new AnalyzerActions
                 {
-                    OperationBlockStartAction = context => callCount++
+                    OperationBlockStartAction = _ => callCount++
                 }
             );
 
@@ -134,7 +134,7 @@ namespace Dena.CodeAnalysis.Testing
             var stubAnalyzer = new StubAnalyzer(
                 new AnalyzerActions
                 {
-                    SemanticModelAction = context => callCount++
+                    SemanticModelAction = _ => callCount++
                 }
             );
 
@@ -151,7 +151,7 @@ namespace Dena.CodeAnalysis.Testing
             var stubAnalyzer = new StubAnalyzer(
                 new AnalyzerActions
                 {
-                    SymbolAction = context => callCount++
+                    SymbolAction = _ => callCount++
                 }
             );
 
@@ -168,7 +168,7 @@ namespace Dena.CodeAnalysis.Testing
             var stubAnalyzer = new StubAnalyzer(
                 new AnalyzerActions
                 {
-                    SymbolStartAction = context => callCount++
+                    SymbolStartAction = _ => callCount++
                 }
             );
 
@@ -185,7 +185,7 @@ namespace Dena.CodeAnalysis.Testing
             var stubAnalyzer = new StubAnalyzer(
                 new AnalyzerActions
                 {
-                    SyntaxNodeAction = context => callCount++
+                    SyntaxNodeAction = _ => callCount++
                 }
             );
 
@@ -202,7 +202,7 @@ namespace Dena.CodeAnalysis.Testing
             var stubAnalyzer = new StubAnalyzer(
                 new AnalyzerActions
                 {
-                    SyntaxTreeAction = context => callCount++
+                    SyntaxTreeAction = _ => callCount++
                 }
             );
 
