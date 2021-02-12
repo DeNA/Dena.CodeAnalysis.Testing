@@ -10,7 +10,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
     public static class ExampleCode
     {
         /// <summary>
-        /// An example code that can be compiled successfully with no Diagnostics.
+        /// An example code for class libraries that can be compiled successfully with no Diagnostics.
         /// </summary>
         public const string DiagnosticsFreeClassLibrary = @"
 internal static class Foo
