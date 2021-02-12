@@ -40,8 +40,20 @@ namespace Dena.CodeAnalysis.CSharp.Testing
 
             builder.AppendLine("  {");
             var pathDiff = DiffPath(builder, expectedPath, actualSpan.Path);
-            var startDiff = DiffStartLinePos(builder, expectedStart, actualSpan.StartLinePosition, expectedPath, actualSpan.Path);
-            var endDiff = DiffEndLinePos(builder, expectedEnd, actualSpan.EndLinePosition, expectedPath, actualSpan.Path);
+            var startDiff = DiffStartLinePos(
+                builder,
+                expectedStart,
+                actualSpan.StartLinePosition,
+                expectedPath,
+                actualSpan.Path
+            );
+            var endDiff = DiffEndLinePos(
+                builder,
+                expectedEnd,
+                actualSpan.EndLinePosition,
+                expectedPath,
+                actualSpan.Path
+            );
             builder.AppendLine("  }");
 
             Assert.IsFalse(pathDiff || startDiff || endDiff, builder.ToString());
@@ -75,8 +87,20 @@ namespace Dena.CodeAnalysis.CSharp.Testing
             var builder = new StringBuilder();
 
             builder.AppendLine("  {");
-            var startDiff = DiffStartLinePos(builder, expectedStart, actualSpan.StartLinePosition, UncheckedFilePath, UncheckedFilePath);
-            var endDiff = DiffEndLinePos(builder, expectedEnd, actualSpan.EndLinePosition, UncheckedFilePath, UncheckedFilePath);
+            var startDiff = DiffStartLinePos(
+                builder,
+                expectedStart,
+                actualSpan.StartLinePosition,
+                UncheckedFilePath,
+                UncheckedFilePath
+            );
+            var endDiff = DiffEndLinePos(
+                builder,
+                expectedEnd,
+                actualSpan.EndLinePosition,
+                UncheckedFilePath,
+                UncheckedFilePath
+            );
             builder.AppendLine("  }");
 
             Assert.IsFalse(startDiff || endDiff, builder.ToString());
@@ -97,12 +121,18 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         }
 
 
-        private static bool DiffStartLinePos(StringBuilder builder, LinePosition expected, LinePosition actual, string expectedPath, string actualPath)
+        private static bool DiffStartLinePos(
+            StringBuilder builder,
+            LinePosition expected,
+            LinePosition actual,
+            string expectedPath,
+            string actualPath
+        )
         {
             if (actual.Equals(expected))
             {
                 builder.AppendLine(
-                    $"      // It will be shown by 1-based index like: \"{actualPath}({actual.Line+1},{actual.Character+1}): Lorem Ipsum ...\")"
+                    $"      // It will be shown by 1-based index like: \"{actualPath}({actual.Line + 1},{actual.Character + 1}): Lorem Ipsum ...\")"
                 );
                 builder.AppendLine(
                     $"      StartLinePosition = new LinePosition({actual.Line}, {actual.Character})"
@@ -111,13 +141,13 @@ namespace Dena.CodeAnalysis.CSharp.Testing
             }
 
             builder.AppendLine(
-                $"-     // It will be shown by 1-based index like: \"{expectedPath}({expected.Line+1},{expected.Character+1}): Lorem Ipsum ...\")"
+                $"-     // It will be shown by 1-based index like: \"{expectedPath}({expected.Line + 1},{expected.Character + 1}): Lorem Ipsum ...\")"
             );
             builder.AppendLine(
                 $"-     StartLinePosition = new LinePosition({expected.Line}, {expected.Character})"
             );
             builder.AppendLine(
-                $"+     // It will be shown by 1-based index like: \"{actualPath}({actual.Line+1},{actual.Character+1}): Lorem Ipsum ...\")"
+                $"+     // It will be shown by 1-based index like: \"{actualPath}({actual.Line + 1},{actual.Character + 1}): Lorem Ipsum ...\")"
             );
             builder.AppendLine(
                 $"+     StartLinePosition = new LinePosition({actual.Line}, {actual.Character})"
@@ -126,12 +156,18 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         }
 
 
-        private static bool DiffEndLinePos(StringBuilder builder, LinePosition expected, LinePosition actual, string expectedPath, string actualPath)
+        private static bool DiffEndLinePos(
+            StringBuilder builder,
+            LinePosition expected,
+            LinePosition actual,
+            string expectedPath,
+            string actualPath
+        )
         {
             if (actual.Equals(expected))
             {
                 builder.AppendLine(
-                    $"      // It will be shown by 1-based index like: \"{expectedPath}({actual.Line+1},{actual.Character+1}): Lorem Ipsum ...\")"
+                    $"      // It will be shown by 1-based index like: \"{expectedPath}({actual.Line + 1},{actual.Character + 1}): Lorem Ipsum ...\")"
                 );
                 builder.AppendLine(
                     $"      EndLinePosition = new LinePosition({actual.Line}, {actual.Character})"
@@ -140,13 +176,13 @@ namespace Dena.CodeAnalysis.CSharp.Testing
             }
 
             builder.AppendLine(
-                $"-     // It will be shown by 1-based index like: \"{expectedPath}({expected.Line+1},{expected.Character+1}): Lorem Ipsum ...\")"
+                $"-     // It will be shown by 1-based index like: \"{expectedPath}({expected.Line + 1},{expected.Character + 1}): Lorem Ipsum ...\")"
             );
             builder.AppendLine(
                 $"-     EndLinePosition = new LinePosition({expected.Line}, {expected.Character})"
             );
             builder.AppendLine(
-                $"+     // It will be shown by 1-based index like: \"{actualPath}({actual.Line+1},{actual.Character+1}): Lorem Ipsum ...\")"
+                $"+     // It will be shown by 1-based index like: \"{actualPath}({actual.Line + 1},{actual.Character + 1}): Lorem Ipsum ...\")"
             );
             builder.AppendLine(
                 $"+     EndLinePosition = new LinePosition({actual.Line}, {actual.Character})"
