@@ -59,10 +59,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
             );
             builder.AppendLine("  }");
 
-            if (pathDiff || startDiff || endDiff)
-            {
-                Assert.Fail(builder.ToString());
-            }
+            if (pathDiff || startDiff || endDiff) Assert.Fail(builder.ToString());
         }
 
 
@@ -109,10 +106,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
             );
             builder.AppendLine("  }");
 
-            if (startDiff || endDiff)
-            {
-                Assert.Fail(builder.ToString());
-            }
+            if (startDiff || endDiff) Assert.Fail(builder.ToString());
         }
 
 
