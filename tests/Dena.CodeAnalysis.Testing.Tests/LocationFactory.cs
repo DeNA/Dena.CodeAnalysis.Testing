@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis;
 
 
 
-namespace Dena.CodeAnalysis.Testing
+namespace Dena.CodeAnalysis.CSharp.Testing
 {
     public static class LocationFactory
     {

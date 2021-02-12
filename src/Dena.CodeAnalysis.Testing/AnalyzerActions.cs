@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 
 
-namespace Dena.CodeAnalysis.Testing
+namespace Dena.CodeAnalysis.CSharp.Testing
 {
     /// <summary>
     /// Actions to register to <see cref="AnalysisContext"/>.

@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 
 
-namespace Dena.CodeAnalysis.Testing
+namespace Dena.CodeAnalysis.CSharp.Testing
 {
     /// <summary>
     /// A stub collections for <see cref="DiagnosticDescriptor" />.
