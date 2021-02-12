@@ -83,6 +83,23 @@ LocationAssert.HaveTheSpan(
 
 
 
+### Print Diagnostics
+```c#
+var diagnostics = await DiagnosticAnalyzerRunner.Run(
+    anyAnalyzer,
+    @"public static class Program
+{
+    public static void Main()
+    {
+        System.Console.WriteLine(""Hello, World!"");
+    }
+}");
+
+Assert.AreEqual(0, diagnostics.Length, DiagnosticsFormatter.Format(diagnostics));
+```
+
+
+
 ### Check whether the DiagnosticAnalyzer.Initialize have been called
 
 ```c#
