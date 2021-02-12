@@ -99,9 +99,8 @@ namespace Dena.CodeAnalysis.CSharp.Testing
                 .WithCompilationOptions(compilationOptions);
 
             var compilation = await project.GetCompilationAsync(cancellationToken);
-            if (compilation is null) throw new NoCompilationError();
 
-            var withAnalyzers = compilation.WithAnalyzers(ImmutableArray.Create(analyzer));
+            var withAnalyzers = compilation!.WithAnalyzers(ImmutableArray.Create(analyzer));
             return await withAnalyzers.GetAllDiagnosticsAsync(cancellationToken);
         }
 
@@ -198,17 +197,14 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         /// </summary>
         public class AtLeastOneCodeMustBeRequired : Exception
         {
-            public override string ToString() => "None of codes specified but at least one code must be specified";
-        }
-
-
-
-        /// <summary>
-        /// No compilation.
-        /// </summary>
-        public class NoCompilationError : Exception
-        {
-            public override string ToString() => "Cannot get a compilation";
+            /// <summary>
+            /// Creates a new exception that explains "None of codes specified but at least one code must be specified".
+            /// </summary>
+            public AtLeastOneCodeMustBeRequired() : base(
+                "None of codes specified but at least one code must be specified"
+            )
+            {
+            }
         }
     }
 }
