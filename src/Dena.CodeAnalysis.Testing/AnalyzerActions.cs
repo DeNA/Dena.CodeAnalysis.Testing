@@ -98,7 +98,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         /// <returns>Composed actions.</returns>
         [SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "This is an exposed API")]
         public static AnalyzerActions Compose(AnalyzerActions a, AnalyzerActions b) =>
-            new()
+            new AnalyzerActions
             {
                 CodeBlockAction = ComposeAction(a.CodeBlockAction, b.CodeBlockAction),
                 CodeBlockStartAction = ComposeAction(a.CodeBlockStartAction, b.CodeBlockStartAction),

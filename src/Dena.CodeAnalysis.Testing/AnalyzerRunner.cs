@@ -7,8 +7,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Host.Mef;
 using Microsoft.CodeAnalysis.Testing;
-using Microsoft.CodeAnalysis.MSBuild;
+using Microsoft.VisualStudio.Composition;
 
 
 
@@ -67,8 +68,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         {
             if (!codes.Any()) throw new AtLeastOneCodeMustBeRequired();
 
-            MSBuildLocatorRegisterer.RegisterIfNecessary();
-            using var workspace = MSBuildWorkspace.Create();
+            using var workspace = CreateWorkspace();
             var projectId = ProjectId.CreateNewId();
             var solution = workspace
                 .CurrentSolution
@@ -92,9 +92,9 @@ namespace Dena.CodeAnalysis.CSharp.Testing
                 .WithCompilationOptions(compilationOptions);
 
             var compilation = await project.GetCompilationAsync(cancellationToken);
-            var withAnalyzers = compilation!.WithAnalyzers(
-                ImmutableArray.Create(analyzer)
-            );
+            if (compilation is null) throw new NoCompilationError();
+
+            var withAnalyzers = compilation.WithAnalyzers(ImmutableArray.Create(analyzer));
             return await withAnalyzers.GetAllDiagnosticsAsync(cancellationToken);
         }
 
@@ -102,6 +102,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         /// <summary>
         /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.CSharp.Testing.CSharpAnalyzerTest{DiagnosticAnalyzer, IVerifier}.CreateCompilationOptions" />
         /// </summary>
+        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "This is an exposed API.")]
         public static CompilationOptions CompilationOptionsForDynamicClassLibrary() =>
             new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true);
 
@@ -109,6 +110,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         /// <summary>
         /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.CSharp.Testing.CSharpAnalyzerTest{DiagnosticAnalyzer, IVerifier}.CreateParseOptions" />
         /// </summary>
+        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "This is an exposed API.")]
         public static ParseOptions ParseOptionsForLanguageVersionsDefault() =>
             new CSharpParseOptions(DefaultLanguageVersion, DocumentationMode.Diagnose);
 
@@ -150,6 +152,38 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         private static readonly LanguageVersion DefaultLanguageVersion =
             Enum.TryParse("Default", out LanguageVersion version) ? version : LanguageVersion.CSharp6;
 
+        private static readonly Lazy<IExportProviderFactory> ExportProviderFactory;
+
+
+        /// <inheritdoc cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest{IVerifier}.CreateWorkspace" />
+        private static AdhocWorkspace CreateWorkspace()
+        {
+            var exportProvider = ExportProviderFactory.Value.CreateExportProvider();
+            var host = MefHostServices.Create(exportProvider.AsCompositionContext());
+            return new AdhocWorkspace(host);
+        }
+
+
+        /// <inheritdoc cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest{IVerifier}"/>>
+        static DiagnosticAnalyzerRunner()
+        {
+            ExportProviderFactory = new Lazy<IExportProviderFactory>(
+                () =>
+                {
+                    var discovery = new AttributedPartDiscovery(Resolver.DefaultInstance, true);
+                    var parts = Task.Run(() => discovery.CreatePartsAsync(MefHostServices.DefaultAssemblies))
+                        .GetAwaiter().GetResult();
+                    var catalog = ComposableCatalog.Create(Resolver.DefaultInstance).AddParts(parts)
+                        .WithDocumentTextDifferencingService();
+
+                    var configuration = CompositionConfiguration.Create(catalog);
+                    var runtimeComposition = RuntimeComposition.CreateRuntimeComposition(configuration);
+                    return runtimeComposition.CreateExportProviderFactory();
+                },
+                LazyThreadSafetyMode.ExecutionAndPublication
+            );
+        }
+
 
 
         /// <summary>
@@ -158,6 +192,16 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         public class AtLeastOneCodeMustBeRequired : Exception
         {
             public override string ToString() => "None of codes specified but at least one code must be specified";
+        }
+
+
+
+        /// <summary>
+        /// No compilation.
+        /// </summary>
+        public class NoCompilationError : Exception
+        {
+            public override string ToString() => "Cannot get a compilation";
         }
     }
 }

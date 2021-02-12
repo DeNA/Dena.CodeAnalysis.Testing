@@ -138,7 +138,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         /// <returns><see cref="AnalyzerActions" /> to record all events.</returns>
         [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "This is an exposed API")]
         public static AnalyzerActions CreateSpyActions(SpyAnalyzer spy) =>
-            new()
+            new AnalyzerActions
             {
                 CodeBlockAction = context => spy.CodeBlockActionHistory.Add(context.CodeBlock),
                 CodeBlockStartAction = context => spy.CodeBlockStartActionHistory.Add(context.CodeBlock),
