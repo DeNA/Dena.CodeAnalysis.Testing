@@ -37,7 +37,13 @@ namespace Dena.CodeAnalysis.CSharp.Testing
             DiagnosticAnalyzer analyzer,
             params string[] codes
         ) =>
-            await Run(analyzer, CancellationToken.None, codes);
+            await Run(
+                analyzer,
+                CancellationToken.None,
+                ParseOptionsForLanguageVersionsDefault(),
+                CompilationOptionsForDynamicClassLibrary(),
+                codes
+            );
 
 
         /// <summary>
@@ -45,13 +51,17 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         /// </summary>
         /// <param name="analyzer">The <see cref="DiagnosticAnalyzer" /> to run.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken" /> that the task will observe.</param>
-        /// <param name="codes">The target code that the <paramref name="analyzer" /> analyze.</param>
+        /// <param name="parseOptions">The <see cref="ParseOptions" />. </param>
+        /// <param name="compilationOptions">The <see cref="CompilationOptions" />. Use <see cref="OutputKind.ConsoleApplication"/> if you want to analyze codes including <c>Main()</c> (default: <see cref="OutputKind.DynamicallyLinkedLibrary" />).</param>
+        /// <param name="codes">The target code that the <paramref name="analyzer" /> analyze. Use <see cref="LanguageVersion" /> if you want to specify C# version (default: <see cref="LanguageVersion.Default" />)."</param>
         /// <returns>ImmutableArray contains all reported <see cref="Diagnostic" />.</returns>
         /// <throws>Throws <c cref="AtLeastOneCodeMustBeRequired" /> if <paramref name="codes" /> are empty.</throws>
         [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "This is an exposed API")]
         public static async Task<ImmutableArray<Diagnostic>> Run(
             DiagnosticAnalyzer analyzer,
             CancellationToken cancellationToken,
+            ParseOptions parseOptions,
+            CompilationOptions compilationOptions,
             params string[] codes
         )
         {
@@ -78,8 +88,8 @@ namespace Dena.CodeAnalysis.CSharp.Testing
 
             var project = noMetadataReferencedProject
                 .AddMetadataReferences(metadataReferences)
-                .WithParseOptions(CreateParseOptions())
-                .WithCompilationOptions(CreateCompilationOptions());
+                .WithParseOptions(parseOptions)
+                .WithCompilationOptions(compilationOptions);
 
             var compilation = await project.GetCompilationAsync(cancellationToken);
             var withAnalyzers = compilation!.WithAnalyzers(
@@ -87,6 +97,20 @@ namespace Dena.CodeAnalysis.CSharp.Testing
             );
             return await withAnalyzers.GetAllDiagnosticsAsync(cancellationToken);
         }
+
+
+        /// <summary>
+        /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.CSharp.Testing.CSharpAnalyzerTest{DiagnosticAnalyzer, IVerifier}.CreateCompilationOptions" />
+        /// </summary>
+        public static CompilationOptions CompilationOptionsForDynamicClassLibrary() =>
+            new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true);
+
+
+        /// <summary>
+        /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.CSharp.Testing.CSharpAnalyzerTest{DiagnosticAnalyzer, IVerifier}.CreateParseOptions" />
+        /// </summary>
+        public static ParseOptions ParseOptionsForLanguageVersionsDefault() =>
+            new CSharpParseOptions(DefaultLanguageVersion, DocumentationMode.Diagnose);
 
 
         /// <summary>
@@ -118,20 +142,6 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.CSharp.Testing.CSharpAnalyzerTest{DiagnosticAnalyzer, IVerifier}.Language" />
         /// </summary>
         private const string Language = LanguageNames.CSharp;
-
-
-        /// <summary>
-        /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.CSharp.Testing.CSharpAnalyzerTest{DiagnosticAnalyzer, IVerifier}.CreateCompilationOptions" />
-        /// </summary>
-        private static CompilationOptions CreateCompilationOptions() =>
-            new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true);
-
-
-        /// <summary>
-        /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.CSharp.Testing.CSharpAnalyzerTest{DiagnosticAnalyzer, IVerifier}.CreateParseOptions" />
-        /// </summary>
-        private static ParseOptions CreateParseOptions() =>
-            new CSharpParseOptions(DefaultLanguageVersion, DocumentationMode.Diagnose);
 
 
         /// <summary>
