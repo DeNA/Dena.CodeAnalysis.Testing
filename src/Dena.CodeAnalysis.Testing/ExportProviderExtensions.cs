@@ -10,6 +10,7 @@ using Microsoft.VisualStudio.Composition;
 
 namespace Dena.CodeAnalysis.CSharp.Testing
 {
+    // XXX: This is internal in Microsoft.CodeAnalysis.Testing, but it is needed by AnalyzerRunner.
     /// <inheritdoc cref="Microsoft.CodeAnalysis.Testing.ExportProviderExtensions" />
     internal static class ExportProviderExtensions
     {

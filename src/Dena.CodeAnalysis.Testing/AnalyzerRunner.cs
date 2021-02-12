@@ -68,6 +68,13 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         {
             if (!codes.Any()) throw new AtLeastOneCodeMustBeRequired();
 
+            // XXX: We can use either AdhocWorkspace (used in Microsoft.CodeAnalysis.Testing.AnalyzerTest) or
+            //      MSBuildWorkspace (used in a project template of standalone analyzers[^1]) as a workspace where
+            //      the analyzers run on. We chosen AdhocWorkspace instead of MSBuildWorkspace.
+            //      Because MSBuildWorkspace was provided for only .NET Framework or .NET Core or .NET 5, but not .NET Standard.
+            //      So it causes "CS0234: The type or namespace name 'Build' does not exist in the namespace 'Microsoft'"
+            //      if we set netstandard2.1 as the target framework of Dena.CodeAnalysis.Testing.csproj.
+            // [^1]: https://github.com/dotnet/roslyn-sdk/blob/90e6dc7fb6307bf1bbf4acf91353fd9db22ac1ca/src/VisualStudio.Roslyn.SDK/Roslyn.SDK/ProjectTemplates/CSharp/ConsoleApplication/ConsoleApplication.csproj#L9
             using var workspace = CreateWorkspace();
             var projectId = ProjectId.CreateNewId();
             var solution = workspace

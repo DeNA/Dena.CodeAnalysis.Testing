@@ -11,6 +11,7 @@ using Microsoft.VisualStudio.Composition.Reflection;
 
 namespace Dena.CodeAnalysis.CSharp.Testing
 {
+    // XXX: This is internal in Microsoft.CodeAnalysis.Testing, but it is needed by AnalyzerRunner.
     /// <inheritdoc cref="Microsoft.CodeAnalysis.Testing.ComposableCatalogExtensions" />
     internal static class ComposableCatalogExtensions
     {
