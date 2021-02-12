@@ -6,6 +6,7 @@ using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Testing;
 using Microsoft.CodeAnalysis.MSBuild;
 
@@ -61,7 +62,7 @@ namespace Dena.CodeAnalysis.Testing
             var projectId = ProjectId.CreateNewId();
             var solution = workspace
                 .CurrentSolution
-                .AddProject(projectId, DefaultTestProjectName, DefaultAssemblyName, LanguageNames.CSharp);
+                .AddProject(projectId, DefaultTestProjectName, DefaultAssemblyName, Language);
 
             foreach (var code in codes)
             {
@@ -71,11 +72,15 @@ namespace Dena.CodeAnalysis.Testing
 
             var noMetadataReferencedProject = solution.Projects.First();
 
-            // NOTE: Make standard libraries visible to the specified codes to analyze.
+            // NOTE: Make .NET standard libraries visible to the specified codes to analyze.
             var metadataReferences =
-                await ReferenceAssemblies.Default.ResolveAsync(LanguageNames.CSharp, CancellationToken.None);
+                await ReferenceAssemblies.Default.ResolveAsync(Language, CancellationToken.None);
 
-            var project = noMetadataReferencedProject.AddMetadataReferences(metadataReferences);
+            var project = noMetadataReferencedProject
+                .AddMetadataReferences(metadataReferences)
+                .WithParseOptions(CreateParseOptions())
+                .WithCompilationOptions(CreateCompilationOptions());
+
             var compilation = await project.GetCompilationAsync(cancellationToken);
             var withAnalyzers = compilation!.WithAnalyzers(
                 ImmutableArray.Create(analyzer)
@@ -85,33 +90,55 @@ namespace Dena.CodeAnalysis.Testing
 
 
         /// <summary>
-        /// Gets the prefix to apply to source files added without an explicit name.
         /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest{IVerifier}.DefaultFilePathPrefix" />
         /// </summary>
         private const string DefaultFilePathPrefix = "/0/Test";
 
         /// <summary>
-        /// Gets the name of the default project created for testing.
         /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest{IVerifier}.DefaultTestProjectName" />
         /// </summary>
         private const string DefaultTestProjectName = "TestProject";
 
         /// <summary>
-        /// Gets the default full name of the first source file added for a test.
-        /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest{IVerifier}.DefaultFilePath" />
+        /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest{IVerifier}.DefaultTestProjectName" />
         /// </summary>
-        private static string DefaultFilePath => $"{DefaultFilePathPrefix}{0}.{DefaultFileExt}";
+        private static readonly string DefaultFilePath = $"{DefaultFilePathPrefix}{0}.{DefaultFileExt}";
 
         /// <summary>
-        /// Gets the default file extension to use for files added to the test without an explicit name.
-        /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest{IVerifier}.DefaultFileExt" />
+        /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.CSharp.Testing.CSharpAnalyzerTest{DiagnosticAnalyzer, IVerifier}.DefaultFileExt" />
         /// </summary>
-        private const string DefaultFileExt = default;
+        private const string DefaultFileExt = "cs";
 
         /// <summary>
         /// Gets the default assembly name.
         /// </summary>
-        private static string DefaultAssemblyName => $"{DefaultTestProjectName}.dll";
+        private static readonly string DefaultAssemblyName = $"{DefaultTestProjectName}.dll";
+
+        /// <summary>
+        /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.CSharp.Testing.CSharpAnalyzerTest{DiagnosticAnalyzer, IVerifier}.Language" />
+        /// </summary>
+        private static readonly string Language = LanguageNames.CSharp;
+
+
+        /// <summary>
+        /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.CSharp.Testing.CSharpAnalyzerTest{DiagnosticAnalyzer, IVerifier}.CreateCompilationOptions" />
+        /// </summary>
+        private static CompilationOptions CreateCompilationOptions() =>
+            new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true);
+
+
+        /// <summary>
+        /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.CSharp.Testing.CSharpAnalyzerTest{DiagnosticAnalyzer, IVerifier}.CreateParseOptions" />
+        /// </summary>
+        private static ParseOptions CreateParseOptions() =>
+            new CSharpParseOptions(DefaultLanguageVersion, DocumentationMode.Diagnose);
+
+
+        /// <summary>
+        /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.CSharp.Testing.CSharpAnalyzerTest{DiagnosticAnalyzer, IVerifier}.DefaultLanguageVersion" />
+        /// </summary>
+        private static readonly LanguageVersion DefaultLanguageVersion =
+            Enum.TryParse("Default", out LanguageVersion version) ? version : LanguageVersion.CSharp6;
 
 
 
