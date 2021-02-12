@@ -15,10 +15,8 @@ namespace Dena.CodeAnalysis.CSharp.Testing
     internal static class ExportProviderExtensions
     {
         /// <inheritdoc cref="Microsoft.CodeAnalysis.Testing.ExportProviderExtensions.AsCompositionContext" />
-        public static CompositionContext AsCompositionContext(this ExportProvider exportProvider)
-        {
-            return new CompositionContextShim(exportProvider);
-        }
+        public static CompositionContext AsCompositionContext(this ExportProvider exportProvider) =>
+            new CompositionContextShim(exportProvider);
 
 
 
@@ -28,10 +26,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
             private readonly ExportProvider _exportProvider;
 
 
-            public CompositionContextShim(ExportProvider exportProvider)
-            {
-                _exportProvider = exportProvider;
-            }
+            public CompositionContextShim(ExportProvider exportProvider) => _exportProvider = exportProvider;
 
 
             public override bool TryGetExport(CompositionContract contract, out object export)
@@ -70,29 +65,20 @@ namespace Dena.CodeAnalysis.CSharp.Testing
             private static (Type exportType, Type metadataType) GetContractType(Type contractType, bool importMany)
             {
                 if (importMany && contractType.IsConstructedGenericType)
-                {
                     if (contractType.GetGenericTypeDefinition() == typeof(IList<>)
                         || contractType.GetGenericTypeDefinition() == typeof(ICollection<>)
                         || contractType.GetGenericTypeDefinition() == typeof(IEnumerable<>))
-                    {
                         contractType = contractType.GenericTypeArguments[0];
-                    }
-                }
 
                 if (!contractType.IsConstructedGenericType) throw new NotSupportedException();
 
                 if (contractType.GetGenericTypeDefinition() == typeof(Lazy<>))
-                {
                     return (contractType.GenericTypeArguments[0], null);
-                }
 
                 if (contractType.GetGenericTypeDefinition() == typeof(Lazy<,>))
-                {
                     return (contractType.GenericTypeArguments[0], contractType.GenericTypeArguments[1]);
-                }
 
                 throw new NotSupportedException();
-
             }
         }
     }
