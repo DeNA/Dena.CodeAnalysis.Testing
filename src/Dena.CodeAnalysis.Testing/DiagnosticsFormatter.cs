@@ -40,7 +40,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
 
                 builder.Append("// ").AppendLine(diagnostic.ToString());
 
-                string line = diagnostic.Severity switch
+                var line = diagnostic.Severity switch
                 {
                     DiagnosticSeverity.Error =>
                         $"{nameof(DiagnosticResult)}.{nameof(DiagnosticResult.CompilerError)}(\"{diagnostic.Id}\")",
