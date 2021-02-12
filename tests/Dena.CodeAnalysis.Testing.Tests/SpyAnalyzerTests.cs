@@ -16,7 +16,7 @@ namespace Dena.CodeAnalysis.Testing
             var builder = new StringBuilder();
             var failed = false;
 
-            await DiagnosticAnalyzerRunner.Run(spy, ExampleCode.DiagnosticsFree);
+            await DiagnosticAnalyzerRunner.Run(spy, ExampleCode.DiagnosticsFreeClassLibrary);
 
             if (0 == spy.CodeBlockActionHistory.Count)
             {

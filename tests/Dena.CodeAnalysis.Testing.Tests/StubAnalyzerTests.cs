@@ -19,7 +19,7 @@ namespace Dena.CodeAnalysis.Testing
                 }
             );
 
-            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFree);
+            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFreeClassLibrary);
 
             Assert.AreNotEqual(0, callCount);
         }
@@ -36,7 +36,7 @@ namespace Dena.CodeAnalysis.Testing
                 }
             );
 
-            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFree);
+            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFreeClassLibrary);
 
             Assert.AreNotEqual(0, callCount);
         }
@@ -53,7 +53,7 @@ namespace Dena.CodeAnalysis.Testing
                 }
             );
 
-            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFree);
+            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFreeClassLibrary);
 
             Assert.AreNotEqual(0, callCount);
         }
@@ -70,7 +70,7 @@ namespace Dena.CodeAnalysis.Testing
                 }
             );
 
-            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFree);
+            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFreeClassLibrary);
 
             Assert.AreNotEqual(0, callCount);
         }
@@ -87,7 +87,7 @@ namespace Dena.CodeAnalysis.Testing
                 }
             );
 
-            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFree);
+            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFreeClassLibrary);
 
             Assert.AreNotEqual(0, callCount);
         }
@@ -104,7 +104,7 @@ namespace Dena.CodeAnalysis.Testing
                 }
             );
 
-            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFree);
+            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFreeClassLibrary);
 
             Assert.AreNotEqual(0, callCount);
         }
@@ -121,7 +121,7 @@ namespace Dena.CodeAnalysis.Testing
                 }
             );
 
-            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFree);
+            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFreeClassLibrary);
 
             Assert.AreNotEqual(0, callCount);
         }
@@ -138,7 +138,7 @@ namespace Dena.CodeAnalysis.Testing
                 }
             );
 
-            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFree);
+            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFreeClassLibrary);
 
             Assert.AreNotEqual(0, callCount);
         }
@@ -155,7 +155,7 @@ namespace Dena.CodeAnalysis.Testing
                 }
             );
 
-            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFree);
+            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFreeClassLibrary);
 
             Assert.AreNotEqual(0, callCount);
         }
@@ -172,7 +172,7 @@ namespace Dena.CodeAnalysis.Testing
                 }
             );
 
-            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFree);
+            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFreeClassLibrary);
 
             Assert.AreNotEqual(0, callCount);
         }
@@ -189,7 +189,7 @@ namespace Dena.CodeAnalysis.Testing
                 }
             );
 
-            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFree);
+            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFreeClassLibrary);
 
             Assert.AreNotEqual(0, callCount);
         }
@@ -206,7 +206,7 @@ namespace Dena.CodeAnalysis.Testing
                 }
             );
 
-            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFree);
+            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFreeClassLibrary);
 
             Assert.AreNotEqual(0, callCount);
         }
