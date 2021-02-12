@@ -23,29 +23,19 @@ namespace Dena.CodeAnalysis.CSharp.Testing
 
             // Check to see if IDocumentTextDifferencingService is exported
             foreach (var part in catalog.Parts)
+            foreach (var pair in part.ExportDefinitions)
             {
-                foreach (var pair in part.ExportDefinitions)
-                {
-                    var exportDefinition = pair.Value;
-                    if (exportDefinition.ContractName != "Microsoft.CodeAnalysis.Host.IWorkspaceService")
-                    {
-                        continue;
-                    }
+                var exportDefinition = pair.Value;
+                if (exportDefinition.ContractName != "Microsoft.CodeAnalysis.Host.IWorkspaceService") continue;
 
-                    if (!exportDefinition.Metadata.TryGetValue("ServiceType", out var value)
-                        || !(value is string serviceType))
-                    {
-                        continue;
-                    }
+                if (!exportDefinition.Metadata.TryGetValue("ServiceType", out var value)
+                    || !(value is string serviceType))
+                    continue;
 
-                    if (serviceType != assemblyQualifiedServiceTypeName)
-                    {
-                        continue;
-                    }
+                if (serviceType != assemblyQualifiedServiceTypeName) continue;
 
-                    // The service is exported by default
-                    return catalog;
-                }
+                // The service is exported by default
+                return catalog;
             }
 
             // If IDocumentTextDifferencingService is not exported by default, export it manually
