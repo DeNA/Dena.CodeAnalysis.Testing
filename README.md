@@ -38,9 +38,9 @@ var analyzer = new YourAnalyzer();
 // The analyzer get intialized and get to call registered actions.
 await DiagnosticAnalyzerRunner.Run(
     analyzer,
-    @"public static class Program
+    @"public static class Foo
 {
-    public static void Main()
+    public static void Bar()
     {
         System.Console.WriteLine(""Hello, World!"");
     }
@@ -56,9 +56,9 @@ var analyzer = new YourAnalyzer();
 
 var diagnostics = await DiagnosticAnalyzerRunner.Run(
     analyzer,
-    @"public static class Program
+    @"public static class Foo
 {
-    public static void Main()
+    public static void Bar()
     {
         System.Console.WriteLine(""Hello, World!"");
     }
@@ -87,9 +87,9 @@ LocationAssert.HaveTheSpan(
 ```c#
 var diagnostics = await DiagnosticAnalyzerRunner.Run(
     anyAnalyzer,
-    @"public static class Program
+    @"public static class Foo
 {
-    public static void Main()
+    public static void Bar()
     {
         System.Console.WriteLine(""Hello, World!"");
     }
@@ -107,9 +107,9 @@ var spyAnalyzer = new SpyAnalyzer();
 
 var diagnostics = await DiagnosticAnalyzerRunner.Run(
     spyAnalyzer,
-    @"public static class Program
+    @"public static class Foo
 {
-    public static void Main()
+    public static void Bar()
     {
         System.Console.WriteLine(""Hello, World!"");
     }
@@ -127,9 +127,9 @@ var spyAnalyzer = new SpyAnalyzer();
 
 var diagnostics = await DiagnosticAnalyzerRunner.Run(
     spyAnalyzer,
-    @"public static class Program
+    @"public static class Foo
 {
-    public static void Main()
+    public static void Bar()
     {
         System.Console.WriteLine(""Hello, World!"");
     }
@@ -170,9 +170,9 @@ var stubAnalyzer = new StubAnalyzer(
 
 await DiagnosticAnalyzerRunner.Run(
     stubAnalyzer,
-    @"public static class Program
+    @"public static class Foo
 {
-    public static void Main()
+    public static void Bar()
     {
         System.Console.WriteLine(""Hello, World!"");
     }
