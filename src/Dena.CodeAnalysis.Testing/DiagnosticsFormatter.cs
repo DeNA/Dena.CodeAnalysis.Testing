@@ -40,17 +40,17 @@ namespace Dena.CodeAnalysis.CSharp.Testing
 
                 builder.Append("// ").AppendLine(diagnostic.ToString());
 
-                builder.Append(
-                    diagnostic.Severity switch
-                    {
-                        DiagnosticSeverity.Error =>
-                            $"{nameof(DiagnosticResult)}.{nameof(DiagnosticResult.CompilerError)}(\"{diagnostic.Id}\")",
-                        DiagnosticSeverity.Warning =>
-                            $"{nameof(DiagnosticResult)}.{nameof(DiagnosticResult.CompilerWarning)}(\"{diagnostic.Id}\")",
-                        var severity =>
-                            $"new {nameof(DiagnosticResult)}(\"{diagnostic.Id}\", {nameof(DiagnosticSeverity)}.{severity})"
-                    }
-                );
+                string line = diagnostic.Severity switch
+                {
+                    DiagnosticSeverity.Error =>
+                        $"{nameof(DiagnosticResult)}.{nameof(DiagnosticResult.CompilerError)}(\"{diagnostic.Id}\")",
+                    DiagnosticSeverity.Warning =>
+                        $"{nameof(DiagnosticResult)}.{nameof(DiagnosticResult.CompilerWarning)}(\"{diagnostic.Id}\")",
+                    _ =>
+                        $"new {nameof(DiagnosticResult)}(\"{diagnostic.Id}\", {nameof(DiagnosticSeverity)}.{diagnostic.Severity})"
+                };
+
+                builder.Append(line);
 
                 if (location == Location.None)
                 {

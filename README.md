@@ -23,7 +23,7 @@ This library provides TDD friendly DiagnosticAnalyzer test helpers:
 Requirements
 ------------
 
-* .NET5.0 or later
+* .NET Standard 2.1 or later
 
 
 
