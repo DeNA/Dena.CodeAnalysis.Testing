@@ -40,7 +40,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
             catch (AssertFailedException e)
             {
                 Assert.AreEqual(
-                    @"Assert.IsFalse failed.   {
+                    @"Assert.Fail failed.   {
 -     Path = ""/0/Test999.cs""
 +     Path = ""/0/Test0.cs""
 -     // It will be shown by 1-based index like: ""/0/Test999.cs(1000,1000): Lorem Ipsum ..."")
@@ -88,7 +88,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
             catch (AssertFailedException e)
             {
                 Assert.AreEqual(
-                    @"Assert.IsFalse failed.   {
+                    @"Assert.Fail failed.   {
 -     // It will be shown by 1-based index like: ""/path/to/unchecked.cs(1000,1000): Lorem Ipsum ..."")
 -     StartLinePosition = new LinePosition(999, 999)
 +     // It will be shown by 1-based index like: ""/path/to/unchecked.cs(9,1): Lorem Ipsum ..."")
