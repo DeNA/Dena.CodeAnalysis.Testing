@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -33,21 +34,21 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         )
         {
             var builder = new StringBuilder();
-            for (var i = 0; i < diagnostics.Length; ++i)
+            foreach (var diagnostic in diagnostics)
             {
-                var location = diagnostics[i].Location;
+                var location = diagnostic.Location;
 
-                builder.Append("// ").AppendLine(diagnostics[i].ToString());
+                builder.Append("// ").AppendLine(diagnostic.ToString());
 
                 builder.Append(
-                    diagnostics[i].Severity switch
+                    diagnostic.Severity switch
                     {
                         DiagnosticSeverity.Error =>
-                            $"{nameof(DiagnosticResult)}.{nameof(DiagnosticResult.CompilerError)}(\"{diagnostics[i].Id}\")",
+                            $"{nameof(DiagnosticResult)}.{nameof(DiagnosticResult.CompilerError)}(\"{diagnostic.Id}\")",
                         DiagnosticSeverity.Warning =>
-                            $"{nameof(DiagnosticResult)}.{nameof(DiagnosticResult.CompilerWarning)}(\"{diagnostics[i].Id}\")",
+                            $"{nameof(DiagnosticResult)}.{nameof(DiagnosticResult.CompilerWarning)}(\"{diagnostic.Id}\")",
                         var severity =>
-                            $"new {nameof(DiagnosticResult)}(\"{diagnostics[i].Id}\", {nameof(DiagnosticSeverity)}.{severity})"
+                            $"new {nameof(DiagnosticResult)}(\"{diagnostic.Id}\", {nameof(DiagnosticSeverity)}.{severity})"
                     }
                 );
 
@@ -57,17 +58,17 @@ namespace Dena.CodeAnalysis.CSharp.Testing
                 }
                 else
                 {
-                    AppendLocation(diagnostics[i].Location);
-                    foreach (var additionalLocation in diagnostics[i].AdditionalLocations)
+                    AppendLocation(diagnostic.Location);
+                    foreach (var additionalLocation in diagnostic.AdditionalLocations)
                         AppendLocation(additionalLocation);
                 }
 
-                var arguments = GetArguments(diagnostics[i]);
+                var arguments = GetArguments(diagnostic);
                 if (arguments.Count > 0)
                 {
                     builder.Append($".{nameof(DiagnosticResult.WithArguments)}(");
-                    builder.Append(string.Join(", ", arguments.Select(a => "\"" + a + "\"")));
-                    builder.Append(")");
+                    builder.Append(string.Join(", ", arguments.Select(a => $"\"{a}\"")));
+                    builder.Append(')');
                 }
 
                 builder.AppendLine(",");
@@ -96,6 +97,6 @@ namespace Dena.CodeAnalysis.CSharp.Testing
                 "Arguments",
                 BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance
             )?.GetValue(diagnostic)
-            ?? new object[0];
+            ?? Array.Empty<object>();
     }
 }

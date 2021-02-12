@@ -7,6 +7,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Dena.CodeAnalysis.CSharp.Testing
 {
+    /// <summary>
+    /// Assertions for <see cref="Microsoft.CodeAnalysis.Location"/>.
+    /// </summary>
     public static class LocationAssert
     {
         /// <summary>
@@ -24,7 +27,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         /// <param name="expectedStart">The start line position that expected.</param>
         /// <param name="expectedEnd">The end line position that expected.</param>
         /// <param name="actual">The actual location.</param>
-        /// <exception cref="T:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException">
+        /// <exception cref="Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException">
         /// Thrown if <paramref name="actual" /> have wrong properties.
         /// </exception>
         public static void HaveTheSpan(
@@ -191,9 +194,6 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         }
 
 
-        /// <summary>
-        /// The placeholder file path to represent unchecked file path.
-        /// </summary>
-        public static readonly string UncheckedFilePath = "/path/to/unchecked.cs";
+        private const string UncheckedFilePath = "/path/to/unchecked.cs";
     }
 }
