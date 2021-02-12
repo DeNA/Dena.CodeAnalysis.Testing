@@ -117,7 +117,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         /// <summary>
         /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.CSharp.Testing.CSharpAnalyzerTest{DiagnosticAnalyzer, IVerifier}.Language" />
         /// </summary>
-        private static readonly string Language = LanguageNames.CSharp;
+        private const string Language = LanguageNames.CSharp;
 
 
         /// <summary>
