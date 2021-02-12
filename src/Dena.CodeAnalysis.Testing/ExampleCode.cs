@@ -12,10 +12,10 @@ namespace Dena.CodeAnalysis.Testing
         /// <summary>
         /// An example code that can be compiled successfully with no Diagnostics.
         /// </summary>
-        public const string DiagnosticsFree = @"
-public static class Program
+        public const string DiagnosticsFreeClassLibrary = @"
+internal static class Foo
 {
-    public static void Main()
+    internal static void Bar()
     {
         System.Console.WriteLine(""Hello, World!"");
     }
@@ -25,6 +25,6 @@ public static class Program
         /// <summary>
         /// An example code that contains a syntax error.
         /// </summary>
-        public const string ContainingSyntaxError = DiagnosticsFree + "ERROR";
+        public const string ContainingSyntaxError = DiagnosticsFreeClassLibrary + "ERROR";
     }
 }

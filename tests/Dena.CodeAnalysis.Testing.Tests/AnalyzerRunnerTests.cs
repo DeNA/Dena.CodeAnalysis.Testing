@@ -25,10 +25,10 @@ namespace Dena.CodeAnalysis.Testing
             var anyAnalyzer = new NullAnalyzer();
             var diagnostics = await DiagnosticAnalyzerRunner.Run(
                 anyAnalyzer,
-                ExampleCode.DiagnosticsFree
+                ExampleCode.DiagnosticsFreeClassLibrary
             );
 
-            Assert.AreEqual(0, diagnostics.Length);
+            Assert.AreEqual(0, diagnostics.Length, DiagnosticsFormatter.Format(diagnostics));
         }
 
 
@@ -50,7 +50,7 @@ namespace Dena.CodeAnalysis.Testing
         {
             var spyAnalyzer = new SpyAnalyzer();
 
-            await DiagnosticAnalyzerRunner.Run(spyAnalyzer, ExampleCode.DiagnosticsFree);
+            await DiagnosticAnalyzerRunner.Run(spyAnalyzer, ExampleCode.DiagnosticsFreeClassLibrary);
 
             Assert.IsTrue(spyAnalyzer.IsInitialized);
         }
