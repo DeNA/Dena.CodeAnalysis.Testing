@@ -15,7 +15,7 @@ namespace Dena.CodeAnalysis.Testing
             var actual = await LocationFactory.Create();
 
             LocationAssert.HaveTheSpan(
-                "/0/Test0.",
+                "/0/Test0.cs",
                 new LinePosition(8, 0),
                 new LinePosition(8, 5),
                 actual
@@ -31,7 +31,7 @@ namespace Dena.CodeAnalysis.Testing
             try
             {
                 LocationAssert.HaveTheSpan(
-                    "/0/Test999.",
+                    "/0/Test999.cs",
                     new LinePosition(999, 999),
                     new LinePosition(999, 999),
                     actual
@@ -41,11 +41,15 @@ namespace Dena.CodeAnalysis.Testing
             {
                 Assert.AreEqual(
                     @"Assert.IsFalse failed.   {
--     Path = ""/0/Test999.""
-+     Path = ""/0/Test0.""
+-     Path = ""/0/Test999.cs""
++     Path = ""/0/Test0.cs""
+-     // It will be shown by 1-based index like: ""/0/Test999.cs(1000,1000): Lorem Ipsum ..."")
 -     StartLinePosition = new LinePosition(999, 999)
++     // It will be shown by 1-based index like: ""/0/Test0.cs(9,1): Lorem Ipsum ..."")
 +     StartLinePosition = new LinePosition(8, 0)
+-     // It will be shown by 1-based index like: ""/0/Test999.cs(1000,1000): Lorem Ipsum ..."")
 -     EndLinePosition = new LinePosition(999, 999)
++     // It will be shown by 1-based index like: ""/0/Test0.cs(9,6): Lorem Ipsum ..."")
 +     EndLinePosition = new LinePosition(8, 5)
   }
 ",
@@ -85,9 +89,13 @@ namespace Dena.CodeAnalysis.Testing
             {
                 Assert.AreEqual(
                     @"Assert.IsFalse failed.   {
+-     // It will be shown by 1-based index like: ""/path/to/unchecked.cs(1000,1000): Lorem Ipsum ..."")
 -     StartLinePosition = new LinePosition(999, 999)
++     // It will be shown by 1-based index like: ""/path/to/unchecked.cs(9,1): Lorem Ipsum ..."")
 +     StartLinePosition = new LinePosition(8, 0)
+-     // It will be shown by 1-based index like: ""/path/to/unchecked.cs(1000,1000): Lorem Ipsum ..."")
 -     EndLinePosition = new LinePosition(999, 999)
++     // It will be shown by 1-based index like: ""/path/to/unchecked.cs(9,6): Lorem Ipsum ..."")
 +     EndLinePosition = new LinePosition(8, 5)
   }
 ",
