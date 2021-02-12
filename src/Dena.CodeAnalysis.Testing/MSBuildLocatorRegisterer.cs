@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis.MSBuild;
 
 
 
-namespace Dena.CodeAnalysis.Testing
+namespace Dena.CodeAnalysis.CSharp.Testing
 {
     /// <summary>
     /// A thread-safe initializer for <see cref="MSBuildLocator" />.

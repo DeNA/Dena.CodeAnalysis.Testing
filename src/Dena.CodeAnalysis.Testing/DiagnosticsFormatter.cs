@@ -9,7 +9,7 @@ using Microsoft.CodeAnalysis.Testing;
 
 
 
-namespace Dena.CodeAnalysis.Testing
+namespace Dena.CodeAnalysis.CSharp.Testing
 {
     /// <summary>
     /// A formatter to help debugging diagnostics.

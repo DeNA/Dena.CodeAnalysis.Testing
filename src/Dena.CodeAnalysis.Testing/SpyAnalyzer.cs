@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 
 
-namespace Dena.CodeAnalysis.Testing
+namespace Dena.CodeAnalysis.CSharp.Testing
 {
     /// <summary>
     /// A spy <see cref="DiagnosticAnalyzer" /> that record whether <see cref="Initialize" /> has been called.

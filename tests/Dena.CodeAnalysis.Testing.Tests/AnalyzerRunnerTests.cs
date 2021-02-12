@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 
-namespace Dena.CodeAnalysis.Testing
+namespace Dena.CodeAnalysis.CSharp.Testing
 {
     [TestClass]
     public class AnalyzerRunnerTests

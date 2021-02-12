@@ -12,7 +12,7 @@ using Microsoft.CodeAnalysis.MSBuild;
 
 
 
-namespace Dena.CodeAnalysis.Testing
+namespace Dena.CodeAnalysis.CSharp.Testing
 {
     /// <summary>
     /// A runner for <see cref="DiagnosticAnalyzer" />.
