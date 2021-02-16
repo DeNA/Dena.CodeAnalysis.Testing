@@ -1,5 +1,6 @@
 Dena.CodeAnalysis.Testing
 =========================
+[![CircleCI](https://circleci.com/gh/DeNA/Dena.CodeAnalysis.Testing/tree/master.svg?style=svg)](https://circleci.com/gh/DeNA/Dena.CodeAnalysis.Testing/tree/master)
 
 This library provides TDD friendly DiagnosticAnalyzer test helpers:
 
