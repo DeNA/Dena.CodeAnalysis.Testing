@@ -96,6 +96,10 @@ var diagnostics = await DiagnosticAnalyzerRunner.Run(
 }");
 
 Assert.AreEqual(0, diagnostics.Length, DiagnosticsFormatter.Format(diagnostics));
+// This message is like:
+//
+//   // /0/Test0.cs(9,1): error CS0116: A namespace cannot directly contain members such as fields or methods
+//   DiagnosticResult.CompilerError(""CS0116"").WithSpan(""/0/Test0.cs"", 9, 1, 9, 6),
 ```
 
 
