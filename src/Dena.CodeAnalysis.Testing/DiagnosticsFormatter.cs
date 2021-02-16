@@ -20,15 +20,21 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         /// <summary>
         /// Helper method to format a <see cref="Diagnostic"/> into an easily readable string.
         /// </summary>
-        /// <param name="path">The default file path for diagnostics.</param>
         /// <param name="diagnostics">A collection of <see cref="Diagnostic"/>s to be formatted.</param>
         /// <returns>The <paramref name="diagnostics"/> formatted as a string.</returns>
-        public static string Format(IEnumerable<Diagnostic> diagnostics, string path = "/path/to/file.cs") =>
-            FormatDiagnostics(path, diagnostics.ToArray());
+        public static string Format(ImmutableArray<Diagnostic> diagnostics) => Format(diagnostics.ToArray());
+
+
+        /// <summary>
+        /// Helper method to format a <see cref="Diagnostic"/> into an easily readable string.
+        /// </summary>
+        /// <param name="diagnostics">A collection of <see cref="Diagnostic"/>s to be formatted.</param>
+        /// <returns>The <paramref name="diagnostics"/> formatted as a string.</returns>
+        public static string Format(params Diagnostic[] diagnostics) => Format("path/to/file.cs", diagnostics);
 
 
         /// <inheritdoc cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest{IVerifier}.FormatDiagnostics(ImmutableArray{DiagnosticAnalyzer}, string, Diagnostic[])"/>
-        private static string FormatDiagnostics(
+        private static string Format(
             string defaultFilePath,
             params Diagnostic[] diagnostics
         )
@@ -92,6 +98,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         }
 
 
+        /// <inheritdoc cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest{IVerifier}.GetArguments(Diagnostic)"/>
         private static IReadOnlyList<object> GetArguments(Diagnostic diagnostic) =>
             (IReadOnlyList<object>) diagnostic.GetType().GetProperty(
                 "Arguments",
