@@ -87,13 +87,15 @@ LocationAssert.HaveTheSpan(
 ```c#
 var diagnostics = await DiagnosticAnalyzerRunner.Run(
     anyAnalyzer,
-    @"public static class Foo
+    @"
+internal static class Foo
 {
-    public static void Bar()
+    internal static void Bar()
     {
         System.Console.WriteLine(""Hello, World!"");
     }
-}");
+}
+ERROR");
 
 Assert.AreEqual(0, diagnostics.Length, DiagnosticsFormatter.Format(diagnostics));
 // This message is like:
