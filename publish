@@ -1,0 +1,84 @@
+#!/bin/bash
+set -euo pipefail
+
+BASE_DIR="$(cd "$(dirname "$0")"; pwd)"
+
+
+throw() {
+	local msg="$*"
+	printf '%s' "$msg" 1>&2
+	false
+}
+
+
+has() {
+	local cmd="$1"
+	which "$cmd" >/dev/null 2>&1
+}
+
+
+usage() {
+	cat - 1>&2 <<-EOS
+usage: publish [<options>]
+
+OPTIONS
+	-h, --help	print this help
+EOS 
+}
+
+
+get-version() {
+	(cd "$BASE_DIR"
+		grep -o '<PackageVersion>[^<]*</PackageVersion>' ./src/Dena.CodeAnalysis.Testing/Dena.CodeAnalysis.Testing.csproj | sed 's/<PackageVersion>\([^<]*\).*/\1/'
+1.0.0-alpha0
+	)
+}
+
+
+validate-env() {
+	has dotnet || throw "dotnet must be installed (see https://docs.microsoft.com/ja-jp/dotnet/core/tools/)"
+	has nuget || throw "nuget must be installed (see https://docs.microsoft.com/ja-jp/nuget/install-nuget-client-tools)"
+
+	dotnet --version
+	nuget help 2>/dev/null | head -1
+}
+
+
+acquire-tag() {
+	(cd "$BASE_DIR"
+		local version="$1"
+		git tag | grep -Fqx "$version" || throw "a tag has the same name exists on local.  if still you want to overwrite the tag, please remove the tag on local and try again.: '$version'"
+		git tag "$version"
+	)
+}
+
+
+build() {
+	(cd "$BASE_DIR"
+		dotnet build
+
+		local nupkg="./src/Dena.CodeAnalysis.Testing/bin/Debug/Dena.CodeAnalysis.Testing.1.0.0-alpha0.nupkg"
+		[[ -f "$nupkg" ]] || throw "no .nupkg found at '$nupkg'"
+		echo "$nupkg"
+	)
+}
+
+
+main() {
+	local arg="${1:-}"
+	if [[ "$arg" == "--help" ]] || [[  "$arg" == "-h" ]]; then
+		usage
+		false
+	fi
+
+	validate-env
+	acquire-tag "$(get-version)"
+
+	local nupkg
+	nupkg="$(build)"
+
+	nuget push "$nupkg" -Source https://api.nuget.org/v3/index.json
+}
+
+
+main "$@"
