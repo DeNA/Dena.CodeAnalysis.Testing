@@ -15,8 +15,11 @@
     <Description>Test helpers for DiagnosticAnalyzers</Description>
     <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
     <Copyright>Copyright DeNA Co., Ltd. All rights reserved.</Copyright>
+    <Company>DeNA Co., Ltd.</Company>
     <PackageTags>analyzers</PackageTags>
     <NoPackageAnalysis>true</NoPackageAnalysis>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,6 +29,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.7.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing.MSTest" Version="1.0.1-beta1.*" />
+    <None Include="licenses\LICENSE.txt" Pack="true" PackagePath="" />
   </ItemGroup>
 
 </Project>
