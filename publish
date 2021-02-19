@@ -57,6 +57,8 @@ build() {
 	local version="$2"
 
 	(cd "$BASE_DIR"
+		cp LICENSE src/Dena.CodeAnalysis.Testing/LICENSE
+
 		dotnet build --no-incremental
 
 		local nupkg_orig
