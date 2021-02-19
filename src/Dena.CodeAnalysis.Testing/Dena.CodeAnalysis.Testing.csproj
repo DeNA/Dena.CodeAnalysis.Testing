@@ -13,7 +13,8 @@
     <Authors>Kazuma Inagaki, Koji Hasegawa, Kuniwak</Authors>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Description>Test helpers for DiagnosticAnalyzers</Description>
-    <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/DeNA/Dena.CodeAnalysis.Testing</RepositoryUrl>
     <Copyright>Copyright DeNA Co., Ltd. All rights reserved.</Copyright>
     <Company>DeNA Co., Ltd.</Company>
     <PackageTags>analyzers</PackageTags>
