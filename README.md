@@ -1,6 +1,8 @@
 Dena.CodeAnalysis.Testing
 =========================
-[![CircleCI](https://circleci.com/gh/DeNA/Dena.CodeAnalysis.Testing/tree/master.svg?style=svg)](https://circleci.com/gh/DeNA/Dena.CodeAnalysis.Testing/tree/master)
+[![NuGet version](https://badge.fury.io/nu/Dena.CodeAnalysis.Testing.svg)](https://www.nuget.org/packages/Dena.CodeAnalysis.Testing/)
+[![CircleCI](https://circleci.com/gh/DeNA/Dena.CodeAnalysis.Testing/tree/master.svg?style=shield)](https://circleci.com/gh/DeNA/Dena.CodeAnalysis.Testing/tree/master)
+
 
 This library provides TDD friendly DiagnosticAnalyzer test helpers:
 
