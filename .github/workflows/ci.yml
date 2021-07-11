@@ -1,0 +1,19 @@
+name: CI
+
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@main
+        with:
+          dotnet-version: '5.0.x'
+      - name: dotnet test
+        run: dotnet test ./Dena.CodeAnalysis.Testing.sln
