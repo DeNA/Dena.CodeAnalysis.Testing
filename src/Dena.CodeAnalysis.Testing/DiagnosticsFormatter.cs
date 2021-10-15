@@ -5,8 +5,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Testing;
 
 
 
@@ -33,7 +31,9 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         public static string Format(params Diagnostic[] diagnostics) => Format("path/to/file.cs", diagnostics);
 
 
-        /// <inheritdoc cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest{IVerifier}.FormatDiagnostics(ImmutableArray{DiagnosticAnalyzer}, string, Diagnostic[])"/>
+        /// <summary>
+        /// See <c>Microsoft.CodeAnalysis.Testing.AnalyzerTest{IVerifier}.FormatDiagnostics(ImmutableArray{DiagnosticAnalyzer}, string, Diagnostic[])</c>.
+        /// </summary>
         private static string Format(
             string defaultFilePath,
             params Diagnostic[] diagnostics
@@ -49,11 +49,11 @@ namespace Dena.CodeAnalysis.CSharp.Testing
                 var line = diagnostic.Severity switch
                 {
                     DiagnosticSeverity.Error =>
-                        $"{nameof(DiagnosticResult)}.{nameof(DiagnosticResult.CompilerError)}(\"{diagnostic.Id}\")",
+                        $"DiagnosticResult.CompilerError(\"{diagnostic.Id}\")",
                     DiagnosticSeverity.Warning =>
-                        $"{nameof(DiagnosticResult)}.{nameof(DiagnosticResult.CompilerWarning)}(\"{diagnostic.Id}\")",
+                        $"DiagnosticResult.CompilerWarning(\"{diagnostic.Id}\")",
                     _ =>
-                        $"new {nameof(DiagnosticResult)}(\"{diagnostic.Id}\", {nameof(DiagnosticSeverity)}.{diagnostic.Severity})"
+                        $"new DiagnosticResult(\"{diagnostic.Id}\", {nameof(DiagnosticSeverity)}.{diagnostic.Severity})"
                 };
 
                 builder.Append(line);
@@ -72,7 +72,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
                 var arguments = GetArguments(diagnostic);
                 if (arguments.Count > 0)
                 {
-                    builder.Append($".{nameof(DiagnosticResult.WithArguments)}(");
+                    builder.Append(".DiagnosticResult.WithArguments(");
                     builder.Append(string.Join(", ", arguments.Select(a => $"\"{a}\"")));
                     builder.Append(')');
                 }
@@ -98,7 +98,9 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         }
 
 
-        /// <inheritdoc cref="Microsoft.CodeAnalysis.Testing.AnalyzerTest{IVerifier}.GetArguments(Diagnostic)"/>
+        /// <summary>
+        /// See <c>Microsoft.CodeAnalysis.Testing.AnalyzerTest{IVerifier}.GetArguments(Diagnostic)</c>.
+        /// </summary>
         private static IReadOnlyList<object> GetArguments(Diagnostic diagnostic) =>
             (IReadOnlyList<object>) diagnostic.GetType().GetProperty(
                 "Arguments",

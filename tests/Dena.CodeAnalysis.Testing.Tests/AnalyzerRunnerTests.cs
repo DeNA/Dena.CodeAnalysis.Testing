@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using MSTestAssert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 
 namespace Dena.CodeAnalysis.CSharp.Testing
@@ -13,7 +13,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         {
             var anyAnalyzer = new NullAnalyzer();
 
-            await Assert.ThrowsExceptionAsync<DiagnosticAnalyzerRunner.AtLeastOneCodeMustBeRequired>(
+            await MSTestAssert.ThrowsExceptionAsync<DiagnosticAnalyzerRunner.AtLeastOneCodeMustBeRequired>(
                 async () => { await DiagnosticAnalyzerRunner.Run(anyAnalyzer); }
             );
         }
@@ -28,7 +28,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
                 ExampleCode.DiagnosticsFreeClassLibrary
             );
 
-            Assert.AreEqual(0, diagnostics.Length, DiagnosticsFormatter.Format(diagnostics));
+            MSTestAssert.AreEqual(0, diagnostics.Length, DiagnosticsFormatter.Format(diagnostics));
         }
 
 
@@ -41,7 +41,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
                 ExampleCode.ContainingSyntaxError
             );
 
-            Assert.AreNotEqual(0, diagnostics.Length);
+            MSTestAssert.AreNotEqual(0, diagnostics.Length);
         }
 
 
@@ -52,7 +52,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
 
             await DiagnosticAnalyzerRunner.Run(spyAnalyzer, ExampleCode.DiagnosticsFreeClassLibrary);
 
-            Assert.IsTrue(spyAnalyzer.IsInitialized);
+            MSTestAssert.IsTrue(spyAnalyzer.IsInitialized);
         }
     }
 }

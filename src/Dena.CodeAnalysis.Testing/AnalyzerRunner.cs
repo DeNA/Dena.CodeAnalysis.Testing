@@ -17,7 +17,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
 {
     /// <summary>
     /// A runner for <see cref="DiagnosticAnalyzer" />.
-    /// The purpose of the runner is providing another helpers instead of <see cref="AnalyzerVerifier{T1, T2, T3}.VerifyAnalyzerAsync" />.
+    /// The purpose of the runner is providing another helpers instead of <c>AnalyzerVerifier{T1, T2, T3}.VerifyAnalyzerAsync</c>.
     /// The AnalyzerVerifier has several problems:
     ///
     ///   1. Using AnalyzerVerifier, it is hard to instantiate analyzer with custom arguments (it will be needed
@@ -106,7 +106,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
 
 
         /// <summary>
-        /// This value is equivalent to <see cref="Microsoft.CodeAnalysis.CSharp.Testing.CSharpAnalyzerTest{DiagnosticAnalyzer, IVerifier}.CreateCompilationOptions" />
+        /// This value is equivalent to <c>Microsoft.CodeAnalysis.CSharp.Testing.CSharpAnalyzerTest{DiagnosticAnalyzer, IVerifier}.CreateCompilationOptions</c>.
         /// </summary>
         [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "This is an exposed API.")]
         public static CompilationOptions CompilationOptionsForDynamicClassLibrary() =>
