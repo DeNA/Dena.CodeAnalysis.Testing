@@ -9,7 +9,7 @@
 
   <PropertyGroup>
     <PackageId>Dena.CodeAnalysis.Testing</PackageId>
-    <PackageVersion>3.0.0</PackageVersion>
+    <PackageVersion>3.0.1</PackageVersion>
     <Authors>Kazuma Inagaki, Koji Hasegawa, Kuniwak</Authors>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Description>Test helpers for DiagnosticAnalyzers</Description>
