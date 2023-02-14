@@ -203,6 +203,124 @@ await DiagnosticAnalyzerRunner.Run(
 //   - stubAnalyzer.SyntaxTreeAction
 ```
 
+### DiagnosticAssert Class
+
+#### AreEqual
+
+`DiagnosticAssert.AreEqual` assert that collections of Diagnostics for equality.
+
+Throw an assert exception if given collections satisfy the following condition:
+
+Elements that are only contained on one side. The equivalence is based on following properties
+
+- File path (e.g., path/to/file.cs)
+- Location of the `Diagnostic` (starting line number, starting character position)-(finishing line number, finishing
+  character position)
+- Identifier of the `DiagnosticDescriptor` (DDID) (e.g., CS0494)
+- `DiagnosticMessage` (e.g., The field 'C.hoge' is assigned but its value is never used)
+
+Otherwise, do nothing.
+
+```csharp
+[Test]
+public async Task M()
+{
+    var analyzer = new YourAnalyzer();
+    const string testData = @"
+class C
+{
+    string {|hoge|CS0414|The field 'C.hoge' is assigned but its value is never used|} = ""Forgot semicolon string""
+}";
+
+    var (source, expected) = TestDataParser.CreateSourceAndExpectedDiagnosticFromFile(testData);
+    var actual = await DiagnosticAnalyzerRunner.Run(analyzer, source);
+    DiagnosticsAssert.AreEqual(expected, actual);
+}
+```
+
+Output example
+
+```
+Missing 0 diagnostics, extra 1 diagnostics of all 2 diagnostics:
+    extra	/0/Test0.cs: (3,43)-(3,43), CS1002, ; expected
+```
+
+#### IsEmpty
+
+`DiagnosticAssert.IsEmpty` assert that the `Diagnositc` is no exist.
+
+Throw an assert exception if given collections exist any `Diagnostic`.
+
+The output format and equivalence is the same as `DiagnosticAssert.AreEqual`.
+
+Otherwise, do nothing.
+
+```csharp
+[Test]
+public async Task M()
+{
+    var analyzer = new YourAnalyzer();
+    var source = @"
+class C
+{
+}"; 
+    var actual = await DiagnosticAnalyzerRunner.Run(analyzer, source);
+    DiagnosticsAssert.IsEmpty(actual);
+}
+```
+
+### TestDataParser Class
+
+#### CreateSourceAndExpectedDiagnostics
+
+Create source and expected diagnostic from formatting embedded.
+
+```csharp
+[Test]
+public async Task M()
+{
+    var analyzer = new YourAnalyzer();
+    const string testData = @"
+class C
+{
+    string {|hoge|CS0414|The field 'C.hoge' is assigned but its value is never used|} = ""Forgot semicolon string""
+}";
+
+    var (source, expected) = TestDataParser.CreateSourceAndExpectedDiagnosticFromFile(testData);
+}
+```
+
+The `testData` variable has formatting embedded in the source.
+
+You can parse this format using `CreateSourceAndExpectedDiagnosticFromFile` and get the source and expected Diagnostics.
+
+- source
+
+```csharp
+class C
+{
+    string hoge = "Forgot semicolon string"
+}
+```
+
+- expected Diagnostics
+
+  - Location
+    - (3,11)-(3,15)
+  - DDID
+    - CS0414
+  - DiagnosticMessage
+    - The field 'C.hoge' is assigned but its value is never used
+
+Specify the part to be reported in the following format.
+
+The format is enclosed in `{ }` and separated by `|`.
+
+```
+{|source|DDID|DiagnosticMessage|}
+```
+
+
 
 License
 -------

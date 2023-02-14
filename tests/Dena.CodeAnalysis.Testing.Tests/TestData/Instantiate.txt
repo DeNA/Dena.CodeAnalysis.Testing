@@ -1,0 +1,12 @@
+
+using System.Collections;
+namespace BanNonGenericCollectionsAnalyzer.Test.TestData.OperationAction
+{
+    public class Instantiate
+    {
+        private void Hoge()
+        {
+            var fuga = {|new Stack()|DENA001|Do not use Stack because non-generic collection|};
+        }
+    }
+}
