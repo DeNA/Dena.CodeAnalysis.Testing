@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -10,7 +11,6 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Host.Mef;
 using Microsoft.CodeAnalysis.Testing;
 using Microsoft.VisualStudio.Composition;
-
 
 
 namespace Dena.CodeAnalysis.CSharp.Testing
@@ -31,11 +31,13 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         /// Run the specified <see cref="DiagnosticAnalyzer" />.
         /// </summary>
         /// <param name="analyzer">The <see cref="DiagnosticAnalyzer" /> to run.</param>
+        /// <param name="types"></param>
         /// <param name="codes">The target code that the <paramref name="analyzer" /> analyze.</param>
         /// <returns>ImmutableArray contains all reported <see cref="Diagnostic" />.</returns>
         /// <throws>Throws <c cref="AtLeastOneCodeMustBeRequired" /> if <paramref name="codes" /> are empty.</throws>
         public static async Task<ImmutableArray<Diagnostic>> Run(
             DiagnosticAnalyzer analyzer,
+            Type[] types = default,
             params string[] codes
         ) =>
             await Run(
@@ -43,9 +45,9 @@ namespace Dena.CodeAnalysis.CSharp.Testing
                 CancellationToken.None,
                 ParseOptionsForLanguageVersionsDefault(),
                 CompilationOptionsForDynamicClassLibrary(),
+                MetadataReferencesDefault(types),
                 codes
             );
-
 
         /// <summary>
         /// Run the specified <see cref="DiagnosticAnalyzer" />.
@@ -63,6 +65,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
             CancellationToken cancellationToken,
             ParseOptions parseOptions,
             CompilationOptions compilationOptions,
+            IEnumerable<MetadataReference> metadataReferences,
             params string[] codes
         )
         {
@@ -88,10 +91,6 @@ namespace Dena.CodeAnalysis.CSharp.Testing
             }
 
             var noMetadataReferencedProject = solution.Projects.First();
-
-            // NOTE: Make .NET standard libraries visible to the specified codes to analyze.
-            var metadataReferences =
-                await ReferenceAssemblies.Default.ResolveAsync(Language, CancellationToken.None);
 
             var project = noMetadataReferencedProject
                 .AddMetadataReferences(metadataReferences)
@@ -119,6 +118,21 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "This is an exposed API.")]
         public static ParseOptions ParseOptionsForLanguageVersionsDefault() =>
             new CSharpParseOptions(DefaultLanguageVersion, DocumentationMode.Diagnose);
+
+        private static IEnumerable<MetadataReference> MetadataReferencesDefault(Type[] types)
+        {
+            var metadataReferences = ReferenceAssemblies.Default.ResolveAsync(Language, CancellationToken.None).Result
+                .ToList();
+            if (types != null)
+            {
+                foreach (var type in types)
+                {
+                    metadataReferences.Add(MetadataReference.CreateFromFile(type.Assembly.Location));
+                }
+            }
+
+            return metadataReferences;
+        }
 
 
         /// <summary>
@@ -189,7 +203,6 @@ namespace Dena.CodeAnalysis.CSharp.Testing
                 LazyThreadSafetyMode.ExecutionAndPublication
             );
         }
-
 
 
         /// <summary>
