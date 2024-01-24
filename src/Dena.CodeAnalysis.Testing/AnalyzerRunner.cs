@@ -31,7 +31,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         /// Run the specified <see cref="DiagnosticAnalyzer" />.
         /// </summary>
         /// <param name="analyzer">The <see cref="DiagnosticAnalyzer" /> to run.</param>
-        /// <param name="types"></param>
+        /// <param name="types">The type of metadata you want to add.</param>
         /// <param name="codes">The target code that the <paramref name="analyzer" /> analyze.</param>
         /// <returns>ImmutableArray contains all reported <see cref="Diagnostic" />.</returns>
         /// <throws>Throws <c cref="AtLeastOneCodeMustBeRequired" /> if <paramref name="codes" /> are empty.</throws>
