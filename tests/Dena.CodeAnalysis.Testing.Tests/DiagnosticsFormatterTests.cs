@@ -3,7 +3,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MSTestAssert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 
-
 namespace Dena.CodeAnalysis.CSharp.Testing
 {
     [TestClass]
@@ -14,7 +13,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         {
             var diagnostics = await DiagnosticAnalyzerRunner.Run(
                 new NullAnalyzer(),
-                ExampleCode.ContainingSyntaxError
+                codes: ExampleCode.ContainingSyntaxError
             );
 
             var actual = DiagnosticsFormatter.Format(diagnostics);

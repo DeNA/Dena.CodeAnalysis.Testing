@@ -4,7 +4,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MSTestAssert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 
-
 namespace Dena.CodeAnalysis.CSharp.Testing
 {
     [TestClass]
@@ -17,7 +16,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
             var builder = new StringBuilder();
             var failed = false;
 
-            await DiagnosticAnalyzerRunner.Run(spy, ExampleCode.DiagnosticsFreeClassLibrary);
+            await DiagnosticAnalyzerRunner.Run(spy, codes: ExampleCode.DiagnosticsFreeClassLibrary);
 
             if (0 == spy.CodeBlockActionHistory.Count)
             {
