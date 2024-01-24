@@ -22,6 +22,16 @@ internal static class Foo
 }
 ";
 
+        public const string UniTaskImport = @"
+using Cysharp.Threading.Tasks;
+internal static class Foo
+{
+    internal static void Bar()
+    {
+        System.Console.WriteLine(""Hello, World!"");
+    }
+}";
+
         /// <summary>
         /// An example code that contains a syntax error.
         /// </summary>
