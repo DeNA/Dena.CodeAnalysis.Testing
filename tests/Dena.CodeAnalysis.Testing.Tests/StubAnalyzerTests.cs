@@ -3,7 +3,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MSTestAssert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 
-
 namespace Dena.CodeAnalysis.CSharp.Testing
 {
     [TestClass]
@@ -20,7 +19,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
                 }
             );
 
-            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFreeClassLibrary);
+            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, codes: ExampleCode.DiagnosticsFreeClassLibrary);
 
             MSTestAssert.AreNotEqual(0, callCount);
         }
@@ -37,7 +36,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
                 }
             );
 
-            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFreeClassLibrary);
+            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, codes: ExampleCode.DiagnosticsFreeClassLibrary);
 
             MSTestAssert.AreNotEqual(0, callCount);
         }
@@ -54,7 +53,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
                 }
             );
 
-            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFreeClassLibrary);
+            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, codes: ExampleCode.DiagnosticsFreeClassLibrary);
 
             MSTestAssert.AreNotEqual(0, callCount);
         }
@@ -71,7 +70,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
                 }
             );
 
-            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFreeClassLibrary);
+            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, codes: ExampleCode.DiagnosticsFreeClassLibrary);
 
             MSTestAssert.AreNotEqual(0, callCount);
         }
@@ -88,7 +87,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
                 }
             );
 
-            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFreeClassLibrary);
+            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, codes: ExampleCode.DiagnosticsFreeClassLibrary);
 
             MSTestAssert.AreNotEqual(0, callCount);
         }
@@ -105,7 +104,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
                 }
             );
 
-            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFreeClassLibrary);
+            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, codes: ExampleCode.DiagnosticsFreeClassLibrary);
 
             MSTestAssert.AreNotEqual(0, callCount);
         }
@@ -122,7 +121,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
                 }
             );
 
-            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFreeClassLibrary);
+            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, codes: ExampleCode.DiagnosticsFreeClassLibrary);
 
             MSTestAssert.AreNotEqual(0, callCount);
         }
@@ -139,7 +138,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
                 }
             );
 
-            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFreeClassLibrary);
+            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, codes: ExampleCode.DiagnosticsFreeClassLibrary);
 
             MSTestAssert.AreNotEqual(0, callCount);
         }
@@ -156,7 +155,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
                 }
             );
 
-            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFreeClassLibrary);
+            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, codes: ExampleCode.DiagnosticsFreeClassLibrary);
 
             MSTestAssert.AreNotEqual(0, callCount);
         }
@@ -173,7 +172,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
                 }
             );
 
-            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFreeClassLibrary);
+            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, codes: ExampleCode.DiagnosticsFreeClassLibrary);
 
             MSTestAssert.AreNotEqual(0, callCount);
         }
@@ -190,7 +189,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
                 }
             );
 
-            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFreeClassLibrary);
+            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, codes: ExampleCode.DiagnosticsFreeClassLibrary);
 
             MSTestAssert.AreNotEqual(0, callCount);
         }
@@ -207,7 +206,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
                 }
             );
 
-            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, ExampleCode.DiagnosticsFreeClassLibrary);
+            await DiagnosticAnalyzerRunner.Run(stubAnalyzer, codes: ExampleCode.DiagnosticsFreeClassLibrary);
 
             MSTestAssert.AreNotEqual(0, callCount);
         }

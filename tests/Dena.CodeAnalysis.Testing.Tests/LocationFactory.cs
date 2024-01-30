@@ -11,7 +11,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         {
             var ds = await DiagnosticAnalyzerRunner.Run(
                 new NullAnalyzer(),
-                ExampleCode.ContainingSyntaxError
+                codes: ExampleCode.ContainingSyntaxError
             );
             return ds[0].Location;
         }
