@@ -37,7 +37,6 @@ get-version() {
 
 validate-env() {
 	has dotnet || throw "dotnet must be installed (see https://docs.microsoft.com/ja-jp/dotnet/core/tools/)"
-	has nuget || throw "nuget must be installed (see https://docs.microsoft.com/ja-jp/nuget/install-nuget-client-tools)"
 }
 
 
@@ -88,7 +87,7 @@ main() {
 	local nupkg="./${NUPKG_BASENAME}"
 	build "$nupkg" "$version"
 
-	nuget push "$nupkg" -Source https://api.nuget.org/v3/index.json
+    dotnet nuget push "$nupkg" -Source https://api.nuget.org/v3/index.json
 	git push origin "$version"
 }
 
