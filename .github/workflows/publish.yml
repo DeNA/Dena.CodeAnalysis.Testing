@@ -6,6 +6,9 @@ on:
     - master
     paths:
       - 'src/Dena.CodeAnalysis.Testing/Dena.CodeAnalysis.Testing.csproj'
+  pull_request:
+    paths:
+      - 'src/Dena.CodeAnalysis.Testing/Dena.CodeAnalysis.Testing.csproj'
 
 jobs:
   check-bump-version:
@@ -18,7 +21,7 @@ jobs:
           fetch-depth: 200
       - name: Get version from csproj
         run: |
-          version="$(grep -o --color=never "<PackageVersion>[0-9]\+\.[0-9]\+\.[0-9]\+" src/Dena.CodeAnalysis.Testing.csproj sed 's/<PackageVersion>//')"
+          version="$(grep -o --color=never "<PackageVersion>[0-9]\+\.[0-9]\+\.[0-9]\+" src/Dena.CodeAnalysis.Testing/Dena.CodeAnalysis.Testing.csproj | sed 's/<PackageVersion>//')"
           echo "version=$version" >> "$GITHUB_OUTPUT"
         id: diff
 
@@ -34,12 +37,10 @@ jobs:
           dotnet-version: '5.0.x'
 
       - name: dotnet build
-        run: dotnet build ./Dena.CodeAnalysis.Testing.sln
+        run: dotnet build ./Dena.CodeAnalysis.Testing.sln  --configuration Release
 
       - name: Create NuPkg
         run: dotnet pack ./src/Dena.CodeAnalysis.Testing --include-symbols --configuration Release -o ./nupkg
 
       - name: Publish NuPkg
-        run: dotnet nuget push ./nupkg/Dena.CodeAnalysis.Testing.*.symbols.nupkg -Source https://api.nuget.org/v3/index.json --api-key $NUGET_AUTH_TOKEN
-        env:
-          NUGET_AUTH_TOKEN: ${{ secrets.APIKEY }}
+        run: dotnet nuget push ./nupkg/Dena.CodeAnalysis.Testing.*.symbols.nupkg -s https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_TOKEN }}
