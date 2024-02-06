@@ -6,9 +6,6 @@ on:
     - master
     paths:
       - 'src/Dena.CodeAnalysis.Testing/Dena.CodeAnalysis.Testing.csproj'
-  pull_request:
-    paths:
-      - 'src/Dena.CodeAnalysis.Testing/Dena.CodeAnalysis.Testing.csproj'
 
 jobs:
   check-bump-version:
