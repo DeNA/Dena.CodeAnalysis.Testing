@@ -264,7 +264,7 @@ namespace BanNonGenericCollectionsAnalyzer.Test.TestData.OperationAction
         [Test]
         public void CreateLocation_ReportPointExistsMiddleLine_GetCorrectSourceSpan()
         {
-            var actual = TestDataParser.CreateLocation("aaa\nbbbc\nccc", "bc", 2);
+            var actual = TestDataParser.CreateLocation("aaa\nbbbc\nccc", "bc", 2, "/0/Test0.cs");
             NUnitAssert.Multiple(() =>
             {
                 NUnitAssert.That(actual.SourceSpan.Start, Is.EqualTo(6));
@@ -275,7 +275,7 @@ namespace BanNonGenericCollectionsAnalyzer.Test.TestData.OperationAction
         [Test]
         public void CreateLocation_ReportPointExistsLastLine_GetCorrectSourceSpan()
         {
-            var actual = TestDataParser.CreateLocation("aaa\nbbbc\nccc", "ccc", 3);
+            var actual = TestDataParser.CreateLocation("aaa\nbbbc\nccc", "ccc", 3, "/0/Test0.cs");
             NUnitAssert.Multiple(() =>
             {
                 NUnitAssert.That(actual.SourceSpan.Start, Is.EqualTo(9));
