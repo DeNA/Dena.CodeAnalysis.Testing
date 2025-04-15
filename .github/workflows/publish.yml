@@ -13,7 +13,7 @@ jobs:
     outputs:
       new-version: ${{ steps.diff.outputs.version }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 200
       - name: Get version from csproj
@@ -31,7 +31,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@main
         with:
-          dotnet-version: '5.0.x'
+          dotnet-version: '6.0.x'
 
       - name: dotnet build
         run: dotnet build ./Dena.CodeAnalysis.Testing.sln  --configuration Release
