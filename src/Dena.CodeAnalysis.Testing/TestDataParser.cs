@@ -25,20 +25,19 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         /// <c>e.g., {|new Stack()|CS1002|; expected|}</c>
         /// </remarks>
         /// <param name="testData">String containing format in source</param>
-        /// <param name="path">Pathname of the source file</param>
         /// <returns>
         /// 1. Source extracted from *testData*
         /// 2. Returns a List of Diagnostic containing Location, DiagnosticMessage, and DDID
         /// </returns>
         public static (string source, List<Diagnostic> expectedDiagnostics) CreateSourceAndExpectedDiagnostic(
-            string testData, string path = "/0/Test0.cs")
+            string testData)
         {
             var diagnostics = new List<Diagnostic>();
 
             foreach (var (target, ddid, msg) in ExtractMaker(testData))
             {
                 var format = "{|" + target + "|" + ddid + "|" + msg + "|}";
-                Location location = CreateLocation(testData, format, target.Length, path);
+                Location location = CreateLocation(testData, format, target.Length);
                 testData = testData.Replace(format, target);
                 var diagnosticDescriptor = new DiagnosticDescriptor(
                     id: ddid,
@@ -69,12 +68,12 @@ namespace Dena.CodeAnalysis.CSharp.Testing
             }
         }
 
-        internal static Location CreateLocation(string sourceBeforeExtractFormat, string format, int targetLength, string path)
+        internal static Location CreateLocation(string sourceBeforeExtractFormat, string format, int targetLength)
         {
             var start = CreateLinePositionStart(sourceBeforeExtractFormat, format);
             var end = new LinePosition(start.Line, start.Character + targetLength);
             Location location = Location.Create(
-                path,
+                "/0/Test0.cs",
                 new TextSpan(
                     sourceBeforeExtractFormat.IndexOf(format, StringComparison.Ordinal),
                     targetLength),

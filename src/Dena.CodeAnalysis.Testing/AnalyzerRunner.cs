@@ -46,6 +46,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
                 ParseOptionsForLanguageVersionsDefault(),
                 CompilationOptionsForDynamicClassLibrary(),
                 MetadataReferencesDefault(types),
+                "",
                 codes
             );
 
@@ -56,6 +57,8 @@ namespace Dena.CodeAnalysis.CSharp.Testing
         /// <param name="cancellationToken">The <see cref="CancellationToken" /> that the task will observe.</param>
         /// <param name="parseOptions">The <see cref="ParseOptions" />. </param>
         /// <param name="compilationOptions">The <see cref="CompilationOptions" />. Use <see cref="OutputKind.ConsoleApplication"/> if you want to analyze codes including <c>Main()</c> (default: <see cref="OutputKind.DynamicallyLinkedLibrary" />).</param>
+        /// <param name="metadataReferences">The <see cref="MetadataReference" />s to add to the compilation.</param>
+        /// <param name="filePath">The file path of the source code. This is used to set the <see cref="SyntaxTree.FilePath" /> property.</param>
         /// <param name="codes">The target code that the <paramref name="analyzer" /> analyze. Use <see cref="LanguageVersion" /> if you want to specify C# version (default: <see cref="LanguageVersion.Default" />)."</param>
         /// <returns>ImmutableArray contains all reported <see cref="Diagnostic" />.</returns>
         /// <throws>Throws <c cref="AtLeastOneCodeMustBeRequired" /> if <paramref name="codes" /> are empty.</throws>
@@ -66,6 +69,7 @@ namespace Dena.CodeAnalysis.CSharp.Testing
             ParseOptions parseOptions,
             CompilationOptions compilationOptions,
             IEnumerable<MetadataReference> metadataReferences,
+            string filePath = "",
             params string[] codes
         )
         {
@@ -87,7 +91,8 @@ namespace Dena.CodeAnalysis.CSharp.Testing
             foreach (var code in codes)
             {
                 var documentId = DocumentId.CreateNewId(projectId);
-                solution = solution.AddDocument(documentId, DefaultFilePath, code, filePath: DefaultFilePath);
+                var path = filePath.Length > 0 ? filePath : DefaultFilePath;
+                solution = solution.AddDocument(documentId, path, code, filePath: path);
             }
 
             var noMetadataReferencedProject = solution.Projects.First();
